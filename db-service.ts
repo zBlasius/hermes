@@ -1,7 +1,6 @@
 import { enablePromise, openDatabase } from 'react-native-sqlite-storage';
 import * as SQLite from 'expo-sqlite';
 import { SQLiteDatabase } from 'expo-sqlite'
-
 import { ToDoItem } from './models';
 
 const tableName = 'todoData';
@@ -55,3 +54,5 @@ export const deleteTable = async (db: SQLiteDatabase) => {
 
   await db.runAsync(query);
 };
+
+
