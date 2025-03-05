@@ -1,123 +1,114 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import {
-  Button,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TextInput,
-  useColorScheme,
-  View,
-} from 'react-native';
-import { ToDoItemComponent } from './ToDoItem';
-import { ToDoItem } from './models';
-import { getDBConnection, getTodoItems, saveTodoItems, createTable, deleteTodoItem } from './db-service';
-const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-  const [todos, setTodos] = useState<ToDoItem[]>([]);
-  const [newTodo, setNewTodo] = useState('');
-  const loadDataCallback = useCallback(async () => {
-    try {
-      console.log("1")
-      const initTodos = [{ id: 0, value: 'go to shop' }, { id: 1, value: 'eat at least a one healthy foods' }, { id: 2, value: 'Do some exercises' }];
-      console.log("2")
-      const db = await getDBConnection();
-      console.log("3")
-      await createTable(db);
-      console.log("4")
-      const storedTodoItems = await getTodoItems(db);
-      if (storedTodoItems.length) {
-        setTodos(storedTodoItems); 
-      } else {
-        await saveTodoItems(db, initTodos);
-        setTodos(initTodos);
-      }
-    } catch (error) {
-      console.error('error here', error);
-    }
-  }, []);
-  useEffect(() => {
-    loadDataCallback();
-  }, [loadDataCallback]);
-  const addTodo = async () => {
-    if (!newTodo.trim()) return;
-    try {
-      const newTodos = [...todos, {
-        id: todos.length ? todos.reduce((acc, cur) => {
-          if (cur.id > acc.id) return cur;
-          return acc;
-        }).id + 1 : 0, value: newTodo
-      }];
-      setTodos(newTodos);
-      const db = await getDBConnection();
-      await saveTodoItems(db, newTodos);
-      setNewTodo('');
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const deleteItem = async (id: number) => {
-    try {
-      const db = await getDBConnection();
-      await deleteTodoItem(db, id);
-      todos.splice(id, 1);
-      setTodos(todos.slice(0));
-    } catch (error) {
-      console.error(error);
-    }
-  };
+import React, { useState, useEffect, Component, Fragment } from "react";
+import { View, Text, TextInput, Switch, StyleSheet } from "react-native";
+import { Welcome } from "./src/screens/Welcome/Container";
+import { createStaticNavigation } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+function HomeScreen() {
   return (
-    <SafeAreaView>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic">
-        <View style={[styles.appTitleView]}>
-          <Text style={styles.appTitleText}> ToDo Application </Text>
-        </View>
-        <View>
-          {todos.map((todo) => (
-            <ToDoItemComponent key={todo.id} todo={todo} deleteItem={deleteItem} />
-          ))}
-        </View>
-        <View style={styles.textInputContainer}>
-          <TextInput style={styles.textInput} value={newTodo} onChangeText={text => setNewTodo(text)} />
-          <Button
-            onPress={addTodo}
-            title="Add ToDo"
-            color="#841584"
-            accessibilityLabel="add todo item"
-          />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <View
+      style={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "black",
+      }}
+    >
+      <Welcome />
+    </View>
   );
-};
-const styles = StyleSheet.create({
-  appTitleView: {
-    marginTop: 20,
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  appTitleText: {
-    fontSize: 24,
-    fontWeight: '800'
-  },
-  textInputContainer: {
-    marginTop: 30,
-    marginLeft: 20,
-    marginRight: 20,
-    borderRadius: 10,
-    borderColor: 'black',
-    borderWidth: 1,
-    justifyContent: 'flex-end'
-  },
-  textInput: {
-    borderWidth: 1,
-    borderRadius: 5,
-    height: 30,
-    margin: 10,
-    backgroundColor: 'pink'
+}
+
+const RootStack = createNativeStackNavigator({
+  screens: {
+    Home: HomeScreen,
   },
 });
-export default App;
+
+SplashScreen.preventAutoHideAsync();
+
+export default function App() {
+  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [name, setName] = useState("");
+
+  // Define os estilos dinâmicos conforme o tema
+  const themeStyles = isDarkMode ? darkTheme : lightTheme;
+
+  const [loaded, error] = useFonts({
+    "Work-Sans": require("./assets/fonts/Work Sans.ttf"),
+  });
+
+  useEffect(() => {
+    if (loaded || error) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded, error]);
+
+  if (!loaded && !error) {
+    return null;
+  }
+
+  return (
+    <SafeAreaView style={{height: "100%", width: "100%", ...themeStyles.background}}>
+      <View style={[styles.container, themeStyles.background]}>
+        <Welcome />
+      </View>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 0,
+    height: "100%",
+  },
+  switchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  label: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginRight: 10,
+  },
+  input: {
+    width: "100%",
+    height: 50,
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    fontSize: 16,
+    marginTop: 10,
+  },
+  result: {
+    marginTop: 20,
+    fontSize: 16,
+  },
+});
+
+const lightTheme = StyleSheet.create({
+  background: { backgroundColor: "#f4f4f4" },
+  text: { color: "#333" },
+  input: {
+    backgroundColor: "#fff",
+    borderColor: "#ccc",
+    color: "#333",
+  },
+});
+
+const darkTheme = StyleSheet.create({
+  background: { backgroundColor: "#000000" },
+  text: { color: "#fff" },
+  input: {
+    backgroundColor: "#333",
+    borderColor: "#555",
+    color: "#fff",
+  },
+});
