@@ -10,11 +10,17 @@ import {
 } from "react-native";
 import { styles, darkTheme, lightTheme } from "./themes";
 import Tabs from "../../components/Tabs/Container";
+import { SignUp } from "../SignUp/Container";
+import { Login } from "../Login/Container";
 
-export function WelcomeView() {
+export function WelcomeView(props: {
+  handleChangeTab: (tab: String) => void;
+  currentTab: "Login" | "SignUp";
+}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const objComponent = { Login: <Login />, SignUp: <SignUp /> };
+  console.log("currentTab", props.currentTab);
   return (
     <View style={{ ...styles.container }}>
       <View // ** Header
@@ -58,15 +64,15 @@ export function WelcomeView() {
           width: "100%",
           height: "67%",
           backgroundColor: "#777777",
-          borderStyle: "solid"
+          borderStyle: "solid",
         }}
       >
         <Tabs
           list={["Login", "Sign Up"]}
-          handleSelectTab={(tab) => console.log("Selected: ", tab)}
+          handleSelectTab={(tab) => props.handleChangeTab(tab)}
         />
 
-        <Text></Text>
+        {objComponent[props.currentTab]}
       </View>
       <View // ** Footer
         style={{

@@ -7,4 +7,4 @@ function Container() {
   );
 }
 
-export { Container as Welcome }; 
+export { Container as SignUp }; 

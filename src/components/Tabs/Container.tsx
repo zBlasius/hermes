@@ -65,7 +65,7 @@ export default function Tabs({ list, handleSelectTab }: TabsProps) {
   }
 
   const setTabColor = (index: number) => {
-    
+
     //TODO - make it better to accept more than 2 tabs
     if(index == 0) {
       toggleColorA();
@@ -90,7 +90,7 @@ export default function Tabs({ list, handleSelectTab }: TabsProps) {
         <TouchableWithoutFeedback
           key={index}
           onPress={() => {
-            handleSelectTab(tab);
+            handleSelectTab(tab.replace(/\s/g, ""));
             setTabColor(index);
           }}
         >
