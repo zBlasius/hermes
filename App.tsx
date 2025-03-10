@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Component, Fragment } from "react";
+import "@/global.css";
 import { View, Text, TextInput, Switch, StyleSheet } from "react-native";
 import { Welcome } from "./src/screens/Welcome/Container";
 import { createStaticNavigation } from "@react-navigation/native";
