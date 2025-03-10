@@ -16,11 +16,11 @@ function CompButton({
   const themeStyle = {
     primary: {
         buttonStyle: {
-            backgroundColor: "blue",
+            backgroundColor: "#0098FF",
         },
         textStyle: {
             color: "white",
-            fontWeight: "500" as "500",
+            fontWeight: "600" as "600",
         }
     },
     soft: {
@@ -58,7 +58,7 @@ function CompButton({
     <TouchableOpacity
       style={{
         width: "80%",
-        height: 74,
+        height: 64,
         borderRadius: 10.7,
         justifyContent: "center",
         gap: icon && 10,

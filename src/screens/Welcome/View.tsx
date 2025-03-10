@@ -72,14 +72,14 @@ export function WelcomeView(props: {
           handleSelectTab={(tab) => props.handleChangeTab(tab)}
         />
 
-        {objComponent[props.currentTab]}
+        {objComponent[props.currentTab || "Login"]}
       </View>
       <View // ** Footer
         style={{
           width: "100%",
           height: "10%",
-          backgroundColor: "#777777",
-          display: "flex",
+          backgroundColor: "blue",
+          display: "flex",zIndex: 1,
           justifyContent: "center",
           alignItems: "center",
         }}
@@ -94,11 +94,11 @@ export function WelcomeView(props: {
             fontFamily: "Work Sans",
             textAlign: "center",
             paddingHorizontal: 30,
+            
           }}
         >
-          {" "}
           By signing in with an account, you agree to SO's Terms of Service and
-          Privacy Policy.{" "}
+          Privacy Policy.
         </Text>
       </View>
     </View>

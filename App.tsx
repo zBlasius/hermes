@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 
 function HomeScreen() {
   return (
@@ -53,11 +54,16 @@ export default function App() {
   }
 
   return (
-    <SafeAreaView style={{height: "100%", width: "100%", ...themeStyles.background}}>
-      <View style={[styles.container, themeStyles.background]}>
-        <Welcome />
-      </View>
-    </SafeAreaView>
+    <GluestackUIProvider>
+      {/* Add your app code here */}
+      <SafeAreaView
+        style={{ height: "100%", width: "100%", ...themeStyles.background }}
+      >
+        <View style={[styles.container, themeStyles.background]}>
+          <Welcome />
+        </View>
+      </SafeAreaView>
+    </GluestackUIProvider>
   );
 }
 
