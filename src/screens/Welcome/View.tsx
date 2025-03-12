@@ -78,7 +78,7 @@ export function WelcomeView(props: {
         style={{
           width: "100%",
           height: "10%",
-          backgroundColor: "blue",
+          backgroundColor: "#777777",
           display: "flex",zIndex: 1,
           justifyContent: "center",
           alignItems: "center",

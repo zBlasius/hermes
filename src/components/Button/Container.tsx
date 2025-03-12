@@ -66,7 +66,7 @@ function CompButton({
         ...themeStyle[theme].buttonStyle,
         flexDirection: "row",
       }}
-      onPress={() => console.log("teste") }
+      onPress={onPress}
     >
       {icon && (
         <Image

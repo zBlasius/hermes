@@ -12,10 +12,6 @@ import {
   FormControlErrorText,
 } from "@/components/ui/form-control";
 
-import { Input, InputField } from "@/components/ui/input"
-import { VStack } from "@/components/ui/vstack"
-import { AlertCircleIcon } from "@/components/ui/icon"
-
 import {
   Checkbox,
   CheckboxIndicator,
@@ -23,24 +19,43 @@ import {
   CheckboxIcon,
 } from "@/components/ui/checkbox";
 import { CheckIcon } from "@/components/ui/icon";
+import { Input } from "@/src/components/Input/Container";
 
-export function LoginView() {
-  const [inputValue, setInputValue] = React.useState("");
+interface LoginProps {
+  email: string;
+  password: string;
+  handleButtonPress: () => void;
+  validEmail: boolean;
+  validPassword: boolean;
+  handleChangeEmail: (text: string) => void;
+  handleChangePassword: (text: string) => void;
+}
+export function LoginView({
+  email,
+  password,
+  handleButtonPress,
+  validEmail,
+  validPassword,
+  handleChangeEmail,
+  handleChangePassword,
+}: LoginProps) {
+
   return (
     <View
       style={{
-        width: "100%",
+        width: "95%",
         height: "90%",
-        backgroundColor: "red",
+        //backgroundColor: "red",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         zIndex: 2,
+        margin:"auto"
       }}
     >
       <View
         style={{
-          backgroundColor: "green",
+          //backgroundColor: "green",
           width: "100%",
           height: "33%",
           display: "flex",
@@ -49,7 +64,6 @@ export function LoginView() {
           gap: 16,
         }}
       >
-        {/* Buttons container  */}
         <Button
           icon={"google"}
           title="Sign up with Google"
@@ -66,7 +80,7 @@ export function LoginView() {
 
       <View
         style={{
-          backgroundColor: "gray",
+          //backgroundColor: "gray",
           width: "100%",
           height: "6%",
           display: "flex",
@@ -76,7 +90,7 @@ export function LoginView() {
       >
         <Text
           style={{
-            backgroundColor: "gray",
+            backgroundColor: "#777777",
             zIndex: 1,
             paddingLeft: 10,
             paddingRight: 10,
@@ -97,57 +111,41 @@ export function LoginView() {
 
       <View
         style={{
-          backgroundColor: "gray",
+          //backgroundColor: "gray",
           width: "100%",
-          height: "27%",
+          height: "42%",
+          display:"flex",
+          alignContent:"center",
+          justifyContent:"center"
         }}
       >
-        <VStack className="w-full max-w-[300px] rounded-md border border-background-200 p-4">
-      <FormControl
-        isInvalid={false}
-        size="md"
-        isDisabled={false}
-        isReadOnly={false}
-        isRequired={false}
-      >
-        <FormControlLabel>
-          <FormControlLabelText>Password</FormControlLabelText>
-        </FormControlLabel>
-        <Input className="my-1" size={"lg"}>
-          <InputField
-            type="password"
-            placeholder="password"
-            value={inputValue}
-            onChangeText={(text) => setInputValue(text)}
-          />
-        </Input>
-        <FormControlHelper>
-          <FormControlHelperText>
-            Must be atleast 6 characters.
-          </FormControlHelperText>
-        </FormControlHelper>
-        <FormControlError>
-          <FormControlErrorIcon as={AlertCircleIcon} />
-          <FormControlErrorText>
-            Atleast 6 characters are required.
-          </FormControlErrorText>
-        </FormControlError>
-      </FormControl>
-    </VStack>
+        <Input
+          placeholder="Email address"
+          value={email}
+          handleChange={handleChangeEmail}
+          icon="mail"
+          required={true}
+          isValid={validEmail}
+          errorMessage="Invalid email adress"
+        />
 
-        <Checkbox value="checkbox" size="lg" isInvalid={false} isDisabled={false}>
-          <CheckboxIndicator>
-            <CheckboxIcon as={CheckIcon} />
-          </CheckboxIndicator>
-          <CheckboxLabel>Label</CheckboxLabel>
-        </Checkbox>
+        <Input
+          placeholder="Password"
+          value={password}
+          handleChange={handleChangePassword}
+          icon="lock"
+          type="password"
+          required={true}
+          isValid={validPassword}
+          errorMessage="Must be atleast 6 characters."
+        />
       </View>
 
       <View
         style={{
-          backgroundColor: "white",
+          //backgroundColor: "white",
           width: "100%",
-          height: "33%",
+          height: "18%",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -155,7 +153,7 @@ export function LoginView() {
       >
         <Button
           title="Login"
-          onPress={() => console.log("Login")}
+          onPress={() => handleButtonPress()}
           theme="primary"
         />
       </View>
