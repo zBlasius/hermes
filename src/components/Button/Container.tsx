@@ -6,11 +6,13 @@ function CompButton({
   title,
   theme,
   icon,
+  type
 }: PropsWithChildren<{
   onPress: () => void;
   title: string;
   theme: "primary" | "soft" | "dark";
   icon?: "google" | "apple";
+  type?: "small"
 }>) {
 
   const themeStyle = {
@@ -40,8 +42,20 @@ function CompButton({
             color: "white",
             fontWeight: "500" as "500",
         }
-    },
+    }
   };
+
+  const typeButton = {
+    small: {
+      buttonStyle: {
+        width: "40%" as "40%",
+        height: 40
+      },
+      textStyle: {
+        fontSize: 13
+      }
+    },
+  }
 
   const iconImg = {
     google: {
@@ -64,6 +78,7 @@ function CompButton({
         gap: icon && 10,
         alignItems: "center",
         ...themeStyle[theme].buttonStyle,
+        ...(type ? typeButton[type].buttonStyle : {}),
         flexDirection: "row",
       }}
       onPress={onPress}
@@ -79,7 +94,8 @@ function CompButton({
         style={{
           fontFamily: "Work Sans",
           fontSize: 20.53,
-          ...themeStyle[theme].textStyle
+          ...themeStyle[theme].textStyle,
+          ...(type ? typeButton[type].textStyle : {}),
         }}
       >
         {title}

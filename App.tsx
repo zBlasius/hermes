@@ -1,6 +1,15 @@
 import React, { useState, useEffect, Component, Fragment } from "react";
 import "@/global.css";
-import { View, Text, TextInput, Switch, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Switch,
+  StyleSheet,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { Welcome } from "./src/screens/Welcome/Container";
 import { createStaticNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -20,7 +29,12 @@ function HomeScreen() {
         backgroundColor: "black",
       }}
     >
-      <Welcome />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+      >
+        <Welcome />
+      </KeyboardAvoidingView>
     </View>
   );
 }
@@ -57,13 +71,9 @@ export default function App() {
   return (
     <GluestackUIProvider>
       {/* Add your app code here */}
-      <SafeAreaView
-        style={{ height: "100%", width: "100%", ...themeStyles.background }}
-      >
-        <View style={[styles.container, themeStyles.background]}>
-          <Welcome />
-        </View>
-      </SafeAreaView>
+      <View style={[styles.container, themeStyles.background]}>
+        <Welcome />
+      </View>
     </GluestackUIProvider>
   );
 }

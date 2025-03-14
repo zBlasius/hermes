@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, KeyboardAvoidingView, Platform } from "react-native";
 import { Button } from "../../components/Button/Container";
 import {
   FormControl,
@@ -39,7 +39,6 @@ export function LoginView({
   handleChangeEmail,
   handleChangePassword,
 }: LoginProps) {
-
   return (
     <View
       style={{
@@ -49,8 +48,8 @@ export function LoginView({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        zIndex: 2,
-        margin:"auto"
+        margin: "auto",
+        
       }}
     >
       <View
@@ -91,10 +90,10 @@ export function LoginView({
         <Text
           style={{
             backgroundColor: "#777777",
-            zIndex: 1,
             paddingLeft: 10,
             paddingRight: 10,
             color: "white",
+            zIndex:1
           }}
         >
           or continue with email{" "}
@@ -104,7 +103,7 @@ export function LoginView({
             backgroundColor: "white",
             width: "80%",
             height: 1,
-            position: "absolute",
+            position: "absolute"
           }}
         />
       </View>
@@ -114,31 +113,32 @@ export function LoginView({
           //backgroundColor: "gray",
           width: "100%",
           height: "42%",
-          display:"flex",
-          alignContent:"center",
-          justifyContent:"center"
+          display: "flex",
+          alignContent: "center",
+          justifyContent: "center",
+          zIndex: 3
         }}
       >
-        <Input
-          placeholder="Email address"
-          value={email}
-          handleChange={handleChangeEmail}
-          icon="mail"
-          required={true}
-          isValid={validEmail}
-          errorMessage="Invalid email adress"
-        />
+          <Input
+            placeholder="Email address"
+            value={email}
+            handleChange={handleChangeEmail}
+            icon="mail"
+            required={true}
+            isValid={validEmail}
+            errorMessage="Invalid email adress"
+          />
 
-        <Input
-          placeholder="Password"
-          value={password}
-          handleChange={handleChangePassword}
-          icon="lock"
-          type="password"
-          required={true}
-          isValid={validPassword}
-          errorMessage="Must be atleast 6 characters."
-        />
+          <Input
+            placeholder="Password"
+            value={password}
+            handleChange={handleChangePassword}
+            icon="lock"
+            type="password"
+            required={true}
+            isValid={validPassword}
+            errorMessage="Must be atleast 6 characters."
+          />
       </View>
 
       <View

@@ -84,6 +84,7 @@ export default function Tabs({ list, handleSelectTab }: TabsProps) {
         height: 60,
         width: "100%",
         backgroundColor: "#000000",
+        zIndex:3
       }}
     >
       {list.map((tab, index) => (
