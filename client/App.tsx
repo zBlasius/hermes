@@ -29,12 +29,8 @@ function HomeScreen() {
         backgroundColor: "black",
       }}
     >
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1 }}
-      >
+
         <Welcome />
-      </KeyboardAvoidingView>
     </View>
   );
 }

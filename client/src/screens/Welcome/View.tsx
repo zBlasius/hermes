@@ -22,8 +22,6 @@ export function WelcomeView(props: {
   handleChangeTab: (tab: String) => void;
   currentTab: "Login" | "SignUp";
 }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const objComponent = { Login: <Login />, SignUp: <SignUp /> };
   console.log("currentTab", props.currentTab);
   return (
