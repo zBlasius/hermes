@@ -51,7 +51,6 @@ export class App {
         allowedHeaders: ['Content-Type', 'Authorization']
       })
     );
-    this.express.use("/temp", express.static(path.join(__dirname, "temp"))); //! Vou usar?
   }
 
   private routes(): void { 
