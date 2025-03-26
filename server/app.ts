@@ -6,7 +6,7 @@ import BaseRouter from "./src/routes"
 import 'dotenv/config'
 const PORT = 8080;
 
-declare module "express-session" {
+declare module "express-session" { 
   interface SessionData {
     user: {
       userId: string;
