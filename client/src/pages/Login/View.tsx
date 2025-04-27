@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, KeyboardAvoidingView, Platform } from "react-native";
-import { Button } from "../../components/Button/Container";
+import { Button } from "../../shared/components/Button/Container";
 import {
   FormControl,
   FormControlLabel,
@@ -19,23 +19,24 @@ import {
   CheckboxIcon,
 } from "@/components/ui/checkbox";
 import { CheckIcon } from "@/components/ui/icon";
-import { Input } from "@/src/components/Input/Container";
+import { Input } from "@/src/shared/components/Input/Container";
 
 interface LoginProps {
   email: string;
   password: string;
   handleButtonPress: () => void;
-  validEmail: boolean;
-  validPassword: boolean;
+  emailError?: string;
+  passwordError?: string;
   handleChangeEmail: (text: string) => void;
   handleChangePassword: (text: string) => void;
 }
+
 export function LoginView({
   email,
   password,
   handleButtonPress,
-  validEmail,
-  validPassword,
+  emailError,
+  passwordError,
   handleChangeEmail,
   handleChangePassword,
 }: LoginProps) {
@@ -125,8 +126,8 @@ export function LoginView({
             handleChange={handleChangeEmail}
             icon="mail"
             required={true}
-            isValid={validEmail}
-            errorMessage="Invalid email adress"
+            isValid={!emailError}
+            errorMessage={emailError}
           />
 
           <Input
@@ -136,8 +137,8 @@ export function LoginView({
             icon="lock"
             type="password"
             required={true}
-            isValid={validPassword}
-            errorMessage="Must be atleast 6 characters."
+            isValid={!passwordError}
+            errorMessage={passwordError}
           />
       </View>
 

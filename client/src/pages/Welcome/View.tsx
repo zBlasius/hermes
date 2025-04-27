@@ -14,7 +14,7 @@ import {
   ScrollView,
 } from "react-native";
 import { styles, darkTheme, lightTheme } from "./themes";
-import Tabs from "../../components/Tabs/Container";
+import Tabs from "../../shared/components/Tabs/Container";
 import { SignUp } from "../SignUp/Container";
 import { Login } from "../Login/Container";
 

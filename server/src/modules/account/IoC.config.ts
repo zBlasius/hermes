@@ -3,6 +3,8 @@ import { TYPES } from "./utils"
 import * as repository from "./architeture"
 import * as service from "./domain"
 import * as controller from "./application/"
+import { connection } from "../../database/mysql/connection";
+import { Pool } from "mysql2/typings/mysql/lib/Pool";
 
 const container = new Container();
 
@@ -20,3 +22,10 @@ container
 container
     .bind<controller.IUserController>(TYPES.UserController)
     .to(controller.UserController);
+
+// Database
+container
+    .bind<Pool>("database")
+    .toConstantValue(connection)
+
+export default container;

@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { Button } from "../../components/Button/Container";
+import { Button } from "../../shared/components/Button/Container";
 import {
   FormControl,
   FormControlLabel,
@@ -19,7 +19,7 @@ import {
   CheckboxIcon,
 } from "@/components/ui/checkbox";
 import { CheckIcon } from "@/components/ui/icon";
-import { Input } from "@/src/components/Input/Container";
+import { Input } from "@/src/shared/components/Input/Container";
 
 interface LoginProps {
   email: string;
