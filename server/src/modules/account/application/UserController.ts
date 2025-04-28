@@ -3,19 +3,65 @@ import { IUserController } from "./contracts/IUserController";
 import { inject, injectable } from "inversify";
 import { IUserService } from "../domain";
 import { TYPES } from "../utils";
-import { connection } from "../../../database/mysql/connection";
-import { PoolConnection, QueryError } from "mysql2";
+import { BadRequestError, UnauthorizedError, ConflictError } from "../../../shared/errors/AppError";
 
 @injectable()
 export class UserController implements IUserController {
 
     constructor(
         @inject(TYPES.UserService) private userService: IUserService
-    ){
+    ){}
 
+    async signUp(req: Request, res: Response){
+        try {
+            const { name, email, password } = req.body;
+            const user = await this.userService.signup({name, email, password});
+            res.status(201).json(user);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                res.status(500).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: 'An unknown error occurred' });
+            }
+        }
     }
 
     async login(req: Request, res: Response){
-        this.userService.login();
+        try {
+            const { email, password } = req.body;
+
+            if (!email || !password) {
+                throw new BadRequestError('Email and password are required');
+            }
+
+            const result = await this.userService.login({ email, password });
+            res.json(result);
+        } catch (error) {
+            if (error instanceof Error) {
+                throw new UnauthorizedError(error.message);
+            }
+            throw error;
+        }
+    }
+
+    async signup(req: Request, res: Response) {
+        try {
+            const { name, email, password } = req.body;
+
+            if (!name || !email || !password) {
+                throw new BadRequestError('Name, email and password are required');
+            }
+
+            const result = await this.userService.signup({ name, email, password });
+            res.status(201).json(result);
+        } catch (error) {
+            if (error instanceof Error) {
+                if (error.message.includes('already exists')) {
+                    throw new ConflictError('Email already exists');
+                }
+                throw new BadRequestError(error.message);
+            }
+            throw error;
+        }
     }
 }
