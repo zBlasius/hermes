@@ -7,26 +7,11 @@ import { BadRequestError, UnauthorizedError, ConflictError } from "../../../shar
 
 @injectable()
 export class UserController implements IUserController {
-
     constructor(
         @inject(TYPES.UserService) private userService: IUserService
-    ){}
+    ) {}
 
-    async signUp(req: Request, res: Response){
-        try {
-            const { name, email, password } = req.body;
-            const user = await this.userService.signup({name, email, password});
-            res.status(201).json(user);
-        } catch (error: unknown) {
-            if (error instanceof Error) {
-                res.status(500).json({ error: error.message });
-            } else {
-                res.status(500).json({ error: 'An unknown error occurred' });
-            }
-        }
-    }
-
-    async login(req: Request, res: Response){
+    async login(req: Request, res: Response) {
         try {
             const { email, password } = req.body;
 
