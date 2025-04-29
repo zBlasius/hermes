@@ -2,13 +2,20 @@ import { UserService } from '../UserService';
 import { IUserRepository } from '../../architeture/contracts/IUserRepository';
 import { ConflictError } from '../../../../shared/errors/AppError';
 import { describe, it, expect, beforeEach, jest } from '@jest/globals';
+import bcrypt from 'bcrypt';
+
+// Mock bcrypt
+jest.mock('bcrypt', () => ({
+  hash: jest.fn().mockImplementation(() => Promise.resolve('hashedPassword')),
+  compare: jest.fn().mockImplementation(() => Promise.resolve(true))
+}));
 
 // Mock the repository
-const mockUserRepository: jest.Mocked<IUserRepository> = {
+const mockUserRepository = {
   create: jest.fn(),
   findByEmail: jest.fn(),
   findById: jest.fn()
-};
+} as jest.Mocked<IUserRepository>;
 
 describe('UserService', () => {
   let userService: UserService;
@@ -44,6 +51,7 @@ describe('UserService', () => {
       expect(result.email).toBe(mockSignUpData.email);
       expect(result.name).toBe(mockSignUpData.name);
       expect(mockUserRepository.create).toHaveBeenCalled();
+      expect(bcrypt.hash).toHaveBeenCalledWith(mockSignUpData.password, 10);
     });
 
     it('should throw ConflictError if email already exists', async () => {
@@ -79,15 +87,34 @@ describe('UserService', () => {
       };
 
       mockUserRepository.findByEmail.mockResolvedValue(mockUser);
+      (bcrypt.compare as jest.Mock).mockImplementation(() => Promise.resolve(true));
 
       const result = await userService.login(mockLoginData);
 
       expect(result).toHaveProperty('token');
       expect(result.email).toBe(mockLoginData.email);
+      expect(bcrypt.compare).toHaveBeenCalledWith(mockLoginData.password, mockUser.password);
     });
 
     it('should throw ConflictError with invalid credentials', async () => {
       mockUserRepository.findByEmail.mockResolvedValue(null);
+
+      await expect(userService.login(mockLoginData))
+        .rejects
+        .toThrow(ConflictError);
+    });
+
+    it('should throw ConflictError with invalid password', async () => {
+      const mockUser = {
+        id: 1,
+        name: 'John Doe',
+        email: mockLoginData.email,
+        password: 'hashedPassword',
+        created_at: new Date()
+      };
+
+      mockUserRepository.findByEmail.mockResolvedValue(mockUser);
+      (bcrypt.compare as jest.Mock).mockImplementation(() => Promise.resolve(false));
 
       await expect(userService.login(mockLoginData))
         .rejects

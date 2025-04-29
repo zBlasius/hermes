@@ -4,6 +4,7 @@ import { InternalServerError } from '../../../../shared/errors/AppError';
 import { describe, it, expect, beforeEach, jest } from '@jest/globals';
 
 // Mock the database connection
+// @ts-ignore
 const mockConnection = {
   getConnection: jest.fn()
 } as unknown as Pool;
