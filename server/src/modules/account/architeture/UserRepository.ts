@@ -1,6 +1,5 @@
 import { injectable, inject } from "inversify";
-import { IUserRepository, User } from "./contracts/IUserRepository";
-import { SignUpData } from "../domain/contracts/IUserService";
+import { IUserRepository, User, SignUpData } from "./contracts/IUserRepository";
 import { Pool, PoolConnection, QueryError } from "mysql2";
 import { InternalServerError } from "../../../shared/errors/AppError";
 
@@ -34,18 +33,19 @@ export class UserRepository implements IUserRepository {
     const connection = await this.getConnection();
     try {
       const sql = `
-        INSERT INTO users (name, email, password, created_at)
-        VALUES (?, ?, ?, NOW())
+        INSERT INTO users (name, email, password, type, created_at)
+        VALUES (?, ?, ?, ?, NOW())
       `;
-      const params = [data.name, data.email, data.password];
+      const params = [data.name, data.email, data.password, data.type];
 
-      const result = await this.query<any>(connection, sql, params);
+      const result = await this.query<any>(connection, sql, params); //TODO - Is there a best approach to handle the result?
       
       return {
         id: result.insertId,
         name: data.name,
         email: data.email,
         password: data.password,
+        type: data.type,
         created_at: new Date()
       };
     } finally {
@@ -57,7 +57,7 @@ export class UserRepository implements IUserRepository {
     const connection = await this.getConnection();
     try {
       const sql = `
-        SELECT id, name, email, password, created_at
+        SELECT id, name, email, password, type, created_at
         FROM users
         WHERE email = ?
       `;
@@ -74,7 +74,7 @@ export class UserRepository implements IUserRepository {
     const connection = await this.getConnection();
     try {
       const sql = `
-        SELECT id, name, email, password, created_at
+        SELECT id, name, email, password, type, created_at
         FROM users
         WHERE id = ?
       `;

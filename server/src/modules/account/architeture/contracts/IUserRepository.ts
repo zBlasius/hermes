@@ -1,11 +1,17 @@
-import { SignUpData } from '../../domain/contracts/IUserService';
-
 export interface User {
   id: number;
   name: string;
   email: string;
   password: string;
+  type: 'manual' | 'google' | 'apple';
   created_at: Date;
+}
+
+export interface SignUpData {
+  name: string;
+  email: string;
+  password: string;
+  type: 'manual' | 'google' | 'apple';
 }
 
 export interface IUserRepository {

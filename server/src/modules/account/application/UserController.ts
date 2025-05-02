@@ -13,13 +13,27 @@ export class UserController implements IUserController {
 
     async login(req: Request, res: Response) {
         try {
-            const { email, password } = req.body;
+            const { email, password, type = 'manual' } = req.body;
 
             if (!email || !password) {
                 throw new BadRequestError('Email and password are required');
             }
 
-            const result = await this.userService.login({ email, password });
+            let result;
+            switch (type) {
+                case 'manual':
+                    result = await this.userService.login({ email, password });
+                    break;
+                case 'google':
+                    result = await this.userService.loginWithGoogle({ token: password });
+                    break;
+                case 'apple':
+                    result = await this.userService.loginWithApple({ token: password });
+                    break;
+                default:
+                    throw new BadRequestError('Invalid authentication type');
+            }
+
             res.json(result);
         } catch (error) {
             if (error instanceof Error) {
@@ -31,13 +45,31 @@ export class UserController implements IUserController {
 
     async signup(req: Request, res: Response) {
         try {
-            const { name, email, password } = req.body;
+            const { name, email, password, type = 'manual' } = req.body;
 
-            if (!name || !email || !password) {
-                throw new BadRequestError('Name, email and password are required');
+            if (!email || !password) {
+                throw new BadRequestError('Email and password are required');
             }
 
-            const result = await this.userService.signup({ name, email, password });
+            if (type === 'manual' && !name) {
+                throw new BadRequestError('Name is required for manual signup');
+            }
+
+            let result;
+            switch (type) {
+                case 'manual':
+                    result = await this.userService.signup({ name, email, password });
+                    break;
+                case 'google':
+                    result = await this.userService.signUpByGoogle({ token: password });
+                    break;
+                case 'apple':
+                    result = await this.userService.signUpByApple({ token: password });
+                    break;
+                default:
+                    throw new BadRequestError('Invalid authentication type');
+            }
+
             res.status(201).json(result);
         } catch (error) {
             if (error instanceof Error) {
@@ -49,4 +81,4 @@ export class UserController implements IUserController {
             throw error;
         }
     }
-}
+}   
