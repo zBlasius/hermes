@@ -3,8 +3,10 @@ import express, { Application } from "express";
 import path from "path";
 import cors from "cors";
 import BaseRouter from "./src/routes"
+import 'dotenv/config';
+
 // import 'dotenv/config'
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 // declare module "express-session" { 
 //   interface SessionData {

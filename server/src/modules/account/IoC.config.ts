@@ -3,8 +3,8 @@ import { TYPES } from "./utils"
 import * as repository from "./architeture"
 import * as service from "./domain"
 import * as controller from "./application/"
-import { connection } from "../../database/mysql/connection";
-import { Pool } from "mysql2/typings/mysql/lib/Pool";
+import { connection } from "../../database/postgres/connection";
+import { Pool } from "pg";
 
 const container = new Container();
 
