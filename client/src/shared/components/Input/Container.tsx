@@ -29,10 +29,17 @@ function CompInput({
   isValid,
   errorMessage,
 }: PropsInput) {
-  const iconImg = {
-    mail: MailIcon,
-    alert: AlertCircleIcon,
-    lock: LockIcon,
+  const renderIcon = () => {
+    switch (icon) {
+      case 'mail':
+        return <MailIcon />;
+      case 'alert':
+        return <AlertCircleIcon />;
+      case 'lock':
+        return <LockIcon />;
+      default:
+        return null;
+    }
   };
 
   return (
@@ -59,9 +66,11 @@ function CompInput({
         className="my-1"
         size={"lg"}
       >
-        {icon && iconImg[icon] && (
+        {icon && (
           <InputSlot style={{ backgroundColor: "white", height: "100%" }}>
-            <InputIcon as={iconImg[icon]} />
+            <InputIcon>
+              {renderIcon()}
+            </InputIcon>
           </InputSlot>
         )}
 

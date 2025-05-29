@@ -44,20 +44,18 @@ export function LoginView({
     <View
       style={{
         width: "95%",
-        height: "90%",
-        //backgroundColor: "red",
+        flex: 1,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         margin: "auto",
-        
+        paddingVertical: 20,
       }}
     >
       <View
         style={{
-          //backgroundColor: "green",
           width: "100%",
-          height: "33%",
+          flex: 0.33,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -80,9 +78,8 @@ export function LoginView({
 
       <View
         style={{
-          //backgroundColor: "gray",
           width: "100%",
-          height: "6%",
+          flex: 0.06,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -111,13 +108,12 @@ export function LoginView({
 
       <View
         style={{
-          //backgroundColor: "gray",
           width: "100%",
-          height: "42%",
+          flex: 0.42,
           display: "flex",
-          alignContent: "center",
           justifyContent: "center",
-          zIndex: 3
+          gap: 16,
+          paddingVertical: 10,
         }}
       >
           <Input
@@ -144,12 +140,12 @@ export function LoginView({
 
       <View
         style={{
-          //backgroundColor: "white",
           width: "100%",
-          height: "18%",
+          flex: 0.18,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          paddingVertical: 10,
         }}
       >
         <Button

@@ -1,5 +1,7 @@
 import React, { PropsWithChildren, useEffect, useRef, useState } from "react";
 import { Button, View, TouchableOpacity, Text, Image } from "react-native";
+import GoogleIcon from "../../../../assets/google_icon.png";
+import AppleIcon from "../../../../assets/apple_icon.png";
 
 function CompButton({
   onPress,
@@ -59,11 +61,11 @@ function CompButton({
 
   const iconImg = {
     google: {
-        image: require("../../../assets/google_icon.png"),
+        image: GoogleIcon,
         style: { width: 40, height: 40}
     },
     apple: {
-        image: require("../../../assets/apple_icon.png"),
+        image: AppleIcon,
         style: { width: 34, height: 40}
     }
   };

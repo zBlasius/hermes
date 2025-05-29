@@ -29,7 +29,6 @@ function HomeScreen() {
         backgroundColor: "black",
       }}
     >
-
         <Welcome />
     </View>
   );
@@ -67,9 +66,9 @@ export default function App() {
   return (
     <GluestackUIProvider>
       {/* Add your app code here */}
-      <View style={[styles.container, themeStyles.background]}>
-        <Welcome />
-      </View>
+        <View style={[styles.container, themeStyles.background]}>
+          <Welcome />
+        </View>
     </GluestackUIProvider>
   );
 }

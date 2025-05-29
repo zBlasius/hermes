@@ -11,7 +11,7 @@ function Container() {
 
   function handleLogin() {
     const validation = validateLogin(email, password);
-    
+
     setEmailError(validation.emailError);
     setPasswordError(validation.passwordError);
 
@@ -33,4 +33,4 @@ function Container() {
   );
 }
 
-export { Container as Login }; 
+export { Container as Login };

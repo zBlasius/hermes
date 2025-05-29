@@ -13,6 +13,7 @@ import {
   Keyboard,
   ScrollView,
 } from "react-native";
+
 import { styles, darkTheme, lightTheme } from "./themes";
 import Tabs from "../../shared/components/Tabs/Container";
 import { SignUp } from "../SignUp/Container";
@@ -23,12 +24,16 @@ export function WelcomeView(props: {
   currentTab: "Login" | "SignUp";
 }) {
   const objComponent = { Login: <Login />, SignUp: <SignUp /> };
-  console.log("currentTab", props.currentTab);
+
   return (
-    <View style={{ ...styles.container }}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
+    >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <KeyboardAvoidingView behavior="padding" style={{ width: "100%" }}>
-          <View // ** Header
+        <View style={styles.container}>
+          <View // Header
             style={{
               width: "100%",
               height: "23%",
@@ -64,51 +69,58 @@ export function WelcomeView(props: {
               Login or Sign up to access your account{" "}
             </Text>
           </View>
-          <View // ** Content
+          <ScrollView
             style={{
               width: "100%",
               height: "67%",
-              backgroundColor: "#777777",
-              borderStyle: "solid",
             }}
+            contentContainerStyle={{ flexGrow: 1 }}
+            keyboardShouldPersistTaps="handled"
           >
-            <Tabs
-              list={["Login", "Sign Up"]}
-              handleSelectTab={(tab) => props.handleChangeTab(tab)}
-            />
+            <View style={{ flex: 1, backgroundColor: "#777777" }}>
+              <Tabs
+                list={["Login", "Sign Up"]}
+                handleSelectTab={(tab) => props.handleChangeTab(tab)}
+              />
+              {objComponent[props.currentTab || "Login"]}
+            </View>
+          </ScrollView>
 
-            {objComponent[props.currentTab || "Login"]}
-          </View>
-          <View // ** Footer
+          <View
             style={{
               width: "100%",
               height: "10%",
               backgroundColor: "#777777",
               display: "flex",
-              zIndex: 1,
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            {/* // TODO - create specific component to it  */}
-            <Text
+            <View
               style={{
-                fontSize: 13.26,
                 width: "100%",
-                color: "white",
-                fontWeight: 400,
-                fontFamily: "Work Sans",
-                textAlign: "center",
-                paddingHorizontal: 30,
+                flexWrap: "wrap",
               }}
             >
-              By signing in with an account, you agree to SO's Terms of Service
-              and Privacy Policy.
-            </Text>
+              <Text
+                style={{
+                  fontSize: 13.26,
+                  color: "white",
+                  fontWeight: 400,
+                  fontFamily: "Work Sans",
+                  textAlign: "center",
+                  flexWrap: "wrap",
+                  margin: 'auto',
+                }}
+              >
+                By signing in with an account, you agree to SO's Terms of
+                Service and Privacy Policy.
+              </Text>
+            </View>
           </View>
-        </KeyboardAvoidingView>
+        </View>
       </TouchableWithoutFeedback>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
