@@ -84,7 +84,6 @@ export function WelcomeView(props: {
               />
               {objComponent[props.currentTab || "Login"]}
             </View>
-          </ScrollView>
 
           <View
             style={{
@@ -95,7 +94,7 @@ export function WelcomeView(props: {
               justifyContent: "center",
               alignItems: "center",
             }}
-          >
+            >
             <View
               style={{
                 width: "100%",
@@ -112,12 +111,13 @@ export function WelcomeView(props: {
                   flexWrap: "wrap",
                   margin: 'auto',
                 }}
-              >
+                >
                 By signing in with an account, you agree to SO's Terms of
                 Service and Privacy Policy.
               </Text>
             </View>
           </View>
+                </ScrollView>
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

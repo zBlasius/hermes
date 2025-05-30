@@ -112,7 +112,7 @@ export function LoginView({
           flex: 0.42,
           display: "flex",
           justifyContent: "center",
-          gap: 16,
+          gap: 0,
           paddingVertical: 10,
         }}
       >
@@ -145,7 +145,7 @@ export function LoginView({
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          paddingVertical: 10,
+          paddingVertical: 0,
         }}
       >
         <Button
