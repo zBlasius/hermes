@@ -51,17 +51,18 @@ export class UserController implements IUserController {
     async signup(req: Request, res: Response): Promise<void> {
         try {
             const { name, email, password, type = 'manual' } = req.body;
-
+  
+            console.log('req.body', req.body);  
             if (!email || !password) {
-                throw new BadRequestError('Email and password are required');
+                throw new BadRequestError('Email and password are required'); 
             }
 
             if (type === 'manual' && !name) {
                 throw new BadRequestError('Name is required for manual signup');
             }
 
-            let result: UserResponse;
-            switch (type) {
+            let result: UserResponse; 
+            switch (type) { 
                 case 'manual':
                     result = await this.userService.signup({ name, email, password });
                     break;
@@ -77,6 +78,7 @@ export class UserController implements IUserController {
 
             res.status(201).json(result);
         } catch (error) {
+            //TODO - It shouldn't crash the server in case of an error
             if (error instanceof AppError) {
                 throw error; // Let the error handling middleware handle it
             }

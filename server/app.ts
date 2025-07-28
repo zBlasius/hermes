@@ -5,6 +5,9 @@ import cors from "cors";
 import BaseRouter from "./src/routes"
 import 'dotenv/config';
 import { AppError } from "./src/shared/errors/AppError";
+import { PostgresConnection } from "./src/database/postgres/connection";
+import { DBcontainer } from "./src/shared/container/IoC.config";
+import TYPES from "./src/shared/container/TYPES";
 
 // import 'dotenv/config'
 const PORT = process.env.PORT || 8080;
@@ -22,12 +25,17 @@ const PORT = process.env.PORT || 8080;
 // }
 
 export class App {
-  database = new Object();
+  
+  database = DBcontainer.get<PostgresConnection>(TYPES.PostgresConnection);
   express: Application;
 
   constructor() {
     this.express = express();
-    // this.database.connect();
+
+    this.database.connect().catch(err => {
+      console.error("Failed to connect to the database:", err);
+      process.exit(1); // Exit the process if the database connection fails
+    });
     // this.session();
     this.middleware();
     this.routes();

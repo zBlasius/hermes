@@ -150,7 +150,7 @@ export class UserService implements IUserService {
             const existingUser = await this.userRepository.findByEmail(data.email);
             if (existingUser) {
                 throw new ConflictError('Email already exists');
-            }
+            } 
 
             // Hash password
             const hashedPassword = await this.hashPassword(data.password);
@@ -177,7 +177,7 @@ export class UserService implements IUserService {
         } catch (error) {
             if (error instanceof Error) {
                 throw error;
-            }
+            } 
             throw new InternalServerError('Failed to create user');
         }
     }

@@ -2,21 +2,24 @@ import { injectable, inject } from "inversify";
 import { IUserRepository, User, SignUpData } from "./contracts/IUserRepository";
 import { Pool } from "pg";
 import { InternalServerError } from "../../../shared/errors/AppError"; //TODO - should be here by dependency injection
+import TYPES from "../utils/TYPES"; // Adjust the import path as necessary
+import { PostgresConnection, IDatabase } from "../../../database/postgres/connection"; // Adjust the import path as necessary
+
 
 @injectable()
 export class UserRepository implements IUserRepository {
-  constructor(@inject("database") private connection: Pool) {}
+  constructor(@inject(TYPES.PostgresConnection) private connection: IDatabase) {}
 
   async create(data: SignUpData): Promise<User> {
     try {
       const sql = `
         INSERT INTO users (name, email, password, type, created_at)
-        VALUES ($1, $2, $3, $4, NOW())
+        VALUES ($1, $2, $3, $4, NOW()) 
         RETURNING *
       `;
       const params = [data.name, data.email, data.password, data.type];
-
-      const result = await this.connection.query(sql, params);
+      const client = this.connection.getClient(); 
+      const result = await client.query(sql, params);
       return result.rows[0];
     } catch (error) {
       throw new InternalServerError('Database query failed');
@@ -30,9 +33,9 @@ export class UserRepository implements IUserRepository {
         FROM users
         WHERE email = $1
       `;
-      const params = [email];
-
-      const result = await this.connection.query(sql, params);
+      const params = [email]; 
+      const client = this.connection.getClient(); 
+      const result = await client.query(sql, params);
       return result.rows[0] || null;
     } catch (error) {
       throw new InternalServerError('Database query failed');
@@ -47,8 +50,8 @@ export class UserRepository implements IUserRepository {
         WHERE id = $1
       `;
       const params = [id];
-
-      const result = await this.connection.query(sql, params);
+      const client = this.connection.getClient(); 
+      const result = await client.query(sql, params);
       return result.rows[0] || null;
     } catch (error) {
       throw new InternalServerError('Database query failed');

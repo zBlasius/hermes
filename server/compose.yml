@@ -1,17 +1,17 @@
+version: '3.8'
+
 services:
-  postgres:
-    image: postgres:latest
-    container_name: postgres-db
+  db:
+    image: postgres:16
+    container_name: postgres-DB
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: secret
-      POSTGRES_DB: hermes
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: hermes_db
     ports:
-      - "5432:5432"
+      - "5431:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
 
 volumes:
-  postgres_data:
-
-# //  5432 = porta do docker // 5432 = porta do postgres
+  pgdata:
