@@ -1,9 +1,8 @@
 import { injectable, inject } from "inversify";
 import { IUserRepository, User, SignUpData } from "./contracts/IUserRepository";
-import { Pool } from "pg";
 import { InternalServerError } from "../../../shared/errors/AppError"; //TODO - should be here by dependency injection
 import TYPES from "../utils/TYPES"; // Adjust the import path as necessary
-import { PostgresConnection, IDatabase } from "../../../database/postgres/connection"; // Adjust the import path as necessary
+import { IDatabase } from "../../../database/postgres/connection"; // Adjust the import path as necessary
 
 
 @injectable()
