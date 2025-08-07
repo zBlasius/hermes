@@ -1,4 +1,4 @@
-# Financial Life Tracker (Hermes)
+# Financial Life Tracker (Hermes) - *In development*
 
 This mobile project is designed to help users take control of their financial lives. With a simple and intuitive interface, users can track their incomes and expenses, visualize financial reports, and maintain full access to their data—even when offline.
 
