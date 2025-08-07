@@ -1,4 +1,4 @@
-# Financial Life Tracker
+# Financial Life Tracker (Hermes)
 
 This mobile project is designed to help users take control of their financial lives. With a simple and intuitive interface, users can track their incomes and expenses, visualize financial reports, and maintain full access to their data—even when offline.
 
@@ -9,13 +9,14 @@ This mobile project is designed to help users take control of their financial li
 - Generate **financial reports** based on recorded transactions.
 - **Offline-first approach**: all data is available even without an internet connection.
 - Seamless **syncing with the cloud** when the device reconnects to the internet.
+- Import statements from Revolut for automatic data insertion
 
 ### Technical Highlights:
 - Built using **React Native** for a smooth cross-platform mobile experience.
 - Backend powered by **Node.js**, ensuring scalable and performant APIs.
 - **PostgreSQL** used for structured relational data like user profiles and transaction metadata.
 - **SQLite** utilized for offline caching.
-- **RabbitMQ** utilized for sync offline in backend database (PostgresSQL).
+- **RabbitMQ** utilized for sync offline data in backend database (PostgresSQL).
 - Offline capabilities ensure users never lose access to critical data.
 
 ## Getting Started
