@@ -38,7 +38,7 @@ This mobile project is designed to help users take control of their financial li
 - When online, changes are synced to the backend built with Node.js.
 - The backend manages user data and transactions using Postgress.
 - This hybrid architecture supports both structure and flexibility, ideal for offline-first apps.
-- Check screens on [Figma:]([https://github.com/zBlasius/PhysiLab2d](https://www.figma.com/design/r9Zk7BSqB5jVdbqG028ELb/Financial-App?node-id=1-2&t=hJrqXp8SGZFrBM8R-1)).
+- Check screens on [Figma]([https://github.com/zBlasius/PhysiLab2d](https://www.figma.com/design/r9Zk7BSqB5jVdbqG028ELb/Financial-App?node-id=1-2&t=hJrqXp8SGZFrBM8R-1)).
 
 ## Contribution
 
