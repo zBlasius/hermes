@@ -51,9 +51,9 @@ export class UserController implements IUserController {
     async signup(req: Request, res: Response): Promise<void> {
         try {
             const { name, email, password, type = 'manual' } = req.body;
-  
+   
             console.log('req.body', req.body);  
-            if (!email || !password) {
+            if (!email || !password) { 
                 throw new BadRequestError('Email and password are required'); 
             }
 

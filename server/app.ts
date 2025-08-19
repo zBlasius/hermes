@@ -67,7 +67,7 @@ export class App {
 
   private routes(): void { 
     this.express.use("/api", BaseRouter);
-  }
+  } 
 
   private errorHandling(): void {
     // Error handling middleware must be placed after all other middleware and routes
