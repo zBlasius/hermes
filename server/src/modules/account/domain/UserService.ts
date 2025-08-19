@@ -121,7 +121,7 @@ export class UserService implements IUserService {
     async login(data: LoginData): Promise<UserResponse> {
         const user = await this.userRepository.findByEmail(data.email);
         
-        if (!user) {
+        if (!user) { 
             throw new ConflictError('Invalid email or password');
         }
 
@@ -132,7 +132,7 @@ export class UserService implements IUserService {
         }
 
         const token = this.generateAccessToken({
-            userId: user.id,
+            userId: user.id, 
             email: user.email
         });
 
@@ -150,8 +150,8 @@ export class UserService implements IUserService {
             const existingUser = await this.userRepository.findByEmail(data.email);
             if (existingUser) {
                 throw new ConflictError('Email already exists');
-            }  
-
+            }   
+ 
             // Hash password
             const hashedPassword = await this.hashPassword(data.password);
 

@@ -1,5 +1,7 @@
-import * as Keychain from 'react-native-keychain';
-import { API_URL } from '@env';
+import * as SecureStore from 'expo-secure-store';
+import Constants from "expo-constants";
+const API_URL = Constants?.expoConfig?.extra?.apiUrl;
+
 
 export interface SignUpRequest {
   name: string;
@@ -27,18 +29,23 @@ export const signUp = async (data: SignUpRequest): Promise<SignUpResponse> => {
 
     console.log('response', response)
     if (!response.ok) {
+      console.log('Error response:', response)
       const error = await response.json();
       throw new Error(error.message || 'Failed to sign up');
     }
 
     const result = await response.json();
-    await Keychain.setGenericPassword('token', result.token); // Store token securely
+    console.log('result', result) 
+    await SecureStore.setItemAsync("jwt", result.token);
+    
+    console.log('after key chain')
 
-    const teste = await Keychain.getGenericPassword();
+    const teste = await SecureStore.getItemAsync("jwt");
     console.log('Informações presentes na KeyChain', teste);
 
     return result;
   } catch (error) {
+    console.log('error', error)
     if (error instanceof Error) {
       throw new Error(`Sign up failed: ${error.message}`);
     }

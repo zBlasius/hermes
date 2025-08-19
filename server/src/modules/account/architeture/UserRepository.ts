@@ -37,7 +37,7 @@ export class UserRepository implements IUserRepository {
       const result = await client.query(sql, params);
       return result.rows[0] || null;
     } catch (error) {
-      throw new InternalServerError('Database query failed');
+      throw new InternalServerError('Database query failed'); 
     }
   }
 
