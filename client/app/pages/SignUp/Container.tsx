@@ -1,5 +1,4 @@
 import React from "react";
-import * as Keychain from 'react-native-keychain';
 import SignUpView from "./View";
 import { useState } from "react";
 import { signUp } from "./services/signUpService";
@@ -52,9 +51,10 @@ export default function Container() {
 
   function handleSignUp() {
     const { validEmail, validPassword } = checkInfo();
-    if (!validEmail || !validPassword) {
-      return;
-      }
+    console.log('teste')
+    // if (!validEmail || !validPassword) {
+    //   return;
+    //   }
     signUp({email, password, name: "John Doe"}).then(async ret=> {
       console.log('ret', ret)
       console.log("Sign up successful:", email, password);

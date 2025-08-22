@@ -1,6 +1,7 @@
 import * as SecureStore from 'expo-secure-store';
 import Constants from "expo-constants";
 const API_URL = Constants?.expoConfig?.extra?.apiUrl;
+import { useAuth } from "@/shared/store/AuthProvider";
 
 export interface LoginRequest {
   email: string;
@@ -15,8 +16,8 @@ export interface LoginResponse {
 }
 
 const login = async (data: LoginRequest): Promise<LoginResponse> => {
+    const { insertToken } = useAuth();
   try {
-    console.log('API_URL login', API_URL);
     const response = await fetch(`${API_URL}/login`, {
       method: 'POST',
       headers: {
@@ -32,15 +33,8 @@ const login = async (data: LoginRequest): Promise<LoginResponse> => {
     }
 
     const result = await response.json();
-    console.log('login result', result);
 
-    // Armazena o JWT de forma segura
-    await SecureStore.setItemAsync("jwt", result.token);
-
-    console.log('Token salvo no SecureStore');
-
-    const storedToken = await SecureStore.getItemAsync("jwt");
-    console.log('Token recuperado do SecureStore', storedToken);
+    insertToken(result.token);
 
     return result;
   } catch (error) {

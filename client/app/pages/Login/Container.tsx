@@ -2,7 +2,6 @@ import React from "react";
 import  LoginView from "./View";
 import { useState } from "react";
 import validateLogin from "./use-cases/validateLogin";
-import { api } from "@/shared/services/api";
 import login from "./services/loginService";
 
 export default function Container() {
