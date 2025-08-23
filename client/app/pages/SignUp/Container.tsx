@@ -2,6 +2,7 @@ import React from "react";
 import SignUpView from "./View";
 import { useState } from "react";
 import { signUp } from "./services/signUpService";
+import { useAuth } from "@/shared/store/AuthProvider";
 
 export default function Container() {
   const [email, setEmail] = useState("");
@@ -10,6 +11,8 @@ export default function Container() {
   const [errorMessage, setErrorMessage] = useState("")
   const [validEmail, setValidEmail] = useState(true);
   const [validPassword, setValidPassword] = useState(true);
+  const { insertToken } = useAuth();
+
 
   function isValidEmail(value: string) {
     if (!value) return false;
@@ -56,8 +59,15 @@ export default function Container() {
     //   return;
     //   }
     signUp({email, password, name: "John Doe"}).then(async ret=> {
+      if(ret.token){
+        console.log('entrou aqui no token')
+        insertToken(ret.token);
+      }
+
       console.log('ret', ret)
       console.log("Sign up successful:", email, password);
+    }).catch(err=>{
+      console.log('err', err)
     })
   }
 

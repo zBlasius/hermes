@@ -13,7 +13,7 @@ export default function Container({ children }: PropsWithChildren<{}>) {
 
   return (
     <>
-      {true ? (
+      {!token ? (
         <WelcomeView
           currentTab={currentTab}
           handleChangeTab={(tab) => setCurrentTab(tab as Tab)}

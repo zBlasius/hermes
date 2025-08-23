@@ -5,6 +5,8 @@ import { useFonts } from "expo-font";
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import { AuthProvider } from "@/shared/store/AuthProvider";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import "@/global.css";
+
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -15,9 +17,9 @@ export default function RootLayout() {
   if (!loaded) return null;
 
   return (
-    <GluestackUIProvider mode="light">
+    <GluestackUIProvider mode="dark">
       <AuthProvider>
-        <ThemeProvider value={DefaultTheme}>
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
           <Stack>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="+not-found" />

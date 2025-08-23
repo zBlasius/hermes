@@ -1,6 +1,5 @@
 import Constants from "expo-constants";
 const API_URL = Constants?.expoConfig?.extra?.apiUrl;
-import { useAuth } from "@/shared/store/AuthProvider";
 
 export interface SignUpRequest {
   name: string;
@@ -16,9 +15,9 @@ export interface SignUpResponse {
 }
 
 export const signUp = async (data: SignUpRequest): Promise<SignUpResponse> => {
-  const { insertToken } = useAuth();
+  console.log('entrou no signUp')
 
-  console.log("Inserting token:", insertToken);
+  //console.log("Inserting token:", insertToken);
   console.log('url:', `${API_URL}/signup`);
   try {
     const response = await fetch(`${API_URL}/signup`, {
@@ -37,7 +36,7 @@ export const signUp = async (data: SignUpRequest): Promise<SignUpResponse> => {
 
     const result = await response.json();
     console.log('Sign up successful:', result);
-    insertToken(result.token);
+    //insertToken(result.token);
 
     return result;
   } catch (error) {

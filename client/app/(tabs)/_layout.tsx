@@ -7,11 +7,15 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-
+import { Text } from 'react-native';
+import { useAuth } from '@/shared/store/AuthProvider';
+import Welcome from '../pages/Welcome/Container';
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const { token } = useAuth();
 
-  return (
+  function tabs() {
+    return(
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
@@ -26,6 +30,7 @@ export default function TabLayout() {
           default: {},
         }),
       }}>
+        <Text>Test</Text>
       <Tabs.Screen
         name="index"
         options={{
@@ -41,5 +46,10 @@ export default function TabLayout() {
         }}
       />
     </Tabs>
+    )
+  }
+
+  return (
+    <Welcome> {tabs()} </Welcome>
   );
 }
