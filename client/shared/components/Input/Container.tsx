@@ -61,7 +61,7 @@ function CompInput({
           height: 63,
           gap: 5,
           backgroundColor: "white",
-          paddingLeft: 10,
+          paddingLeft: 10
         }}
         className="my-1"
         size={"lg"}

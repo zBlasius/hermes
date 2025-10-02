@@ -1,11 +1,10 @@
-import * as SecureStore from 'expo-secure-store';
 import Constants from "expo-constants";
 const API_URL = Constants?.expoConfig?.extra?.apiUrl;
-import { useAuth } from "@/shared/store/AuthProvider";
 
 export interface LoginRequest {
   email: string;
   password: string;
+  type: 'manual' | 'google' | 'apple';
 }
 
 export interface LoginResponse {
@@ -16,7 +15,6 @@ export interface LoginResponse {
 }
 
 const login = async (data: LoginRequest): Promise<LoginResponse> => {
-    const { insertToken } = useAuth();
   try {
     const response = await fetch(`${API_URL}/login`, {
       method: 'POST',
@@ -33,8 +31,6 @@ const login = async (data: LoginRequest): Promise<LoginResponse> => {
     }
 
     const result = await response.json();
-
-    insertToken(result.token);
 
     return result;
   } catch (error) {
