@@ -1,7 +1,20 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import HandleRepository from './HandleRepository'
+import HandleRepository from '../HandleRepository'
 
-const genericObjState = {table: "statement", timestamp: new Date()}
+interface IStatementLocalRepository {
+  _id:string;
+  description?: string;
+  amount: number;
+  date: Date;
+  type: 'income' | 'outcome';
+}
+
+interface INewStatement {
+  [key: string]: unknown;
+  description?: string;
+  amount: number;
+  date: Date;
+  type: 'income' | 'outcome';
+}
 
 export class StatementLocalRepository extends HandleRepository{
   constructor() {
@@ -11,13 +24,16 @@ export class StatementLocalRepository extends HandleRepository{
   async getStatements(){
     const statements =  await this.getState('statements');
     console.log('statements', statements)
-    return [];
+    return statements;
   }
 
-  async saveStatements(statements: any[]){
-    const state = {id:1, name: 'Gustavo'};
-    const saveData = await this.saveState(state);
-    console.log('saveData', saveData)
+  async updateStatement(statement: IStatementLocalRepository){
+    const saveData = await this.saveState<IStatementLocalRepository>(statement);
     return saveData;
+  }
+
+  async insertStatement(statement: INewStatement){
+    const insertData = await this.insertState<INewStatement>(statement);
+    return insertData;
   }
 }

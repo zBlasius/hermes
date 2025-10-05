@@ -8,13 +8,15 @@ function CompButton({
   title,
   theme,
   icon,
-  type
+  type,
+  style
 }: PropsWithChildren<{
   onPress: () => void;
   title: string;
   theme: "primary" | "soft" | "dark";
   icon?: "google" | "apple";
-  type?: "small"
+  type?: "small",
+  style: any
 }>) {
 
   const themeStyle = {
@@ -82,6 +84,7 @@ function CompButton({
         ...themeStyle[theme].buttonStyle,
         ...(type ? typeButton[type].buttonStyle : {}),
         flexDirection: "row",
+        ...style
       }}
       onPress={onPress}
     >

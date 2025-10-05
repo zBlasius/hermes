@@ -1,9 +1,11 @@
 import React from "react";
-import { Text, View, ScrollView, StyleSheet, Button } from "react-native";
+import { Text, View, ScrollView, StyleSheet } from "react-native";
+import { Button } from "@/shared/components/Button/Container";
+import { CircleButton } from "@/shared/components/CircleButton/Container";
 
 export default function MovementView({
   handleClickAddButton,
-  handleClickSubtractButton
+  handleClickSubtractButton,
 }: {
   handleClickAddButton: () => void;
   handleClickSubtractButton: () => void;
@@ -24,19 +26,19 @@ export default function MovementView({
 
       {/* Buttons */}
       <View style={styles.buttons}>
-        <View style={styles.buttonWrapper}>
-          <Text style={styles.buttonLabel}>INCOME</Text>
-          <View style={[styles.circle, { backgroundColor: "green" }]}>
-            <Button title="+" onPress={handleClickAddButton} />
-          </View>
-        </View>
-        <View style={styles.buttonWrapper}>
-          <Text style={styles.buttonLabel}>OUTCOME</Text>
-          <View style={[styles.circle, { backgroundColor: "red" }]}>
-            <Text style={styles.circleText}>-</Text>
-            <Button title="-" onPress={handleClickSubtractButton} />
-          </View>
-        </View>
+        <CircleButton
+          title="+"
+          theme={"green"}
+          style={styles.buttonWrapper}
+          onPress={handleClickAddButton}
+        ></CircleButton>
+
+        <CircleButton
+          title="-"
+          theme={"red"}
+          style={styles.buttonWrapper}
+          onPress={handleClickSubtractButton}
+        ></CircleButton>
       </View>
     </ScrollView>
   );
