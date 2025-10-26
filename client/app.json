@@ -9,9 +9,15 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.hermes.client",
+      "infoPlist": {
+        "UIBackgroundModes": ["processing"],
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
+      "package": "com.hermes.client",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -34,13 +40,21 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      "expo-secure-store"
+      "expo-secure-store",
+      "expo-background-task",
+      "expo-font",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true
     },
     "extra": {
-      "apiUrl": "http://172.21.32.1:8080/api"
-    }
+      "apiUrl": "http://172.21.32.1:8080/api",
+      "router": {},
+      "eas": {
+        "projectId": "46734b12-dc45-4e4c-8061-89ed67d7a9ac"
+      }
+    },
+    "owner": "zblasius"
   }
 }

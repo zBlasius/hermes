@@ -1,5 +1,4 @@
-import Constants from "expo-constants";
-const API_URL = Constants?.expoConfig?.extra?.apiUrl;
+const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3000';
 
 export interface LoginRequest {
   email: string;
@@ -16,7 +15,8 @@ export interface LoginResponse {
 
 const login = async (data: LoginRequest): Promise<LoginResponse> => {
   try {
-    const response = await fetch(`${API_URL}/login`, {
+    console.log('API URL', API_URL);
+    const response = await fetch(`${API_URL}/api/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

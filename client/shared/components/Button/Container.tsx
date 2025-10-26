@@ -16,7 +16,7 @@ function CompButton({
   theme: "primary" | "soft" | "dark";
   icon?: "google" | "apple";
   type?: "small",
-  style: any
+  style?: any
 }>) {
 
   const themeStyle = {

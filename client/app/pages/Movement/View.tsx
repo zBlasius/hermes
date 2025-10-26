@@ -6,9 +6,11 @@ import { CircleButton } from "@/shared/components/CircleButton/Container";
 export default function MovementView({
   handleClickAddButton,
   handleClickSubtractButton,
+  handleSyncButton
 }: {
   handleClickAddButton: () => void;
   handleClickSubtractButton: () => void;
+  handleSyncButton: () => void;
 }) {
   return (
     <ScrollView style={styles.container}>
@@ -38,6 +40,12 @@ export default function MovementView({
           theme={"red"}
           style={styles.buttonWrapper}
           onPress={handleClickSubtractButton}
+        ></CircleButton>
+        <CircleButton
+          title="SYNC"
+          theme={"primary"}
+          style={styles.buttonWrapper}
+          onPress={handleSyncButton}
         ></CircleButton>
       </View>
     </ScrollView>

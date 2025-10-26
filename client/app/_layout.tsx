@@ -10,8 +10,25 @@ import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import { AuthProvider } from "@/shared/store/AuthProvider";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-
+//import { registerBackgroundTask } from "@/task/backgroundTask";
 import "@/global.css";
+import { useEffect, useState } from "react";
+import { StyleSheet, Text, View, Button } from "react-native";
+
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  textContainer: {
+    margin: 10,
+  },
+  boldText: {
+    fontWeight: "bold",
+  },
+});
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -19,7 +36,9 @@ export default function RootLayout() {
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
 
-  if (!loaded) return null;
+  useEffect(()=>{
+   // registerBackgroundTask();
+  },[])
 
   return (
     <SafeAreaProvider>
