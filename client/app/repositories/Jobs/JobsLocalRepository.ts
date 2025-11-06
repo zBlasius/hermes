@@ -19,4 +19,9 @@ export class JobsLocalRepository extends HandleRepository{
     return jobs;
   }
 
+  async syncJobs(){
+    // Logic to sync jobs with remote server
+    console.log('Syncing jobs with remote server...');
+  }
+
 }

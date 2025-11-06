@@ -17,6 +17,7 @@ interface PropsInput {
   required?: boolean;
   isValid?: boolean;
   errorMessage?: string;
+  style?: object;
 }
 
 function CompInput({
@@ -28,6 +29,7 @@ function CompInput({
   required,
   isValid,
   errorMessage,
+  style
 }: PropsInput) {
   const renderIcon = () => {
     switch (icon) {
@@ -61,14 +63,15 @@ function CompInput({
           height: 63,
           gap: 5,
           backgroundColor: "white",
-          paddingLeft: 10
+          paddingLeft: 10,
+          ...style
         }}
         className="my-1"
         size={"lg"}
       >
         {icon && (
           <InputSlot style={{ backgroundColor: "white", height: "100%" }}>
-            <InputIcon>
+            <InputIcon style={{ color: "black" }}>
               {renderIcon()}
             </InputIcon>
           </InputSlot>
@@ -79,6 +82,7 @@ function CompInput({
           value={value}
           onChangeText={(text) => handleChange(text)}
           type={type}
+          style={{ color: "black" }}
         />
       </Input>
 

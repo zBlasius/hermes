@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { Button } from "../../../shared/components/Button/Container";
+import { Button } from "@/shared/components/Button/Container";
 
 import { Input } from "@/shared/components/Input/Container";
 

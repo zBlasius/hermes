@@ -102,7 +102,7 @@ const inputFieldStyle = tva({
 });
 
 type IInputProps = React.ComponentProps<typeof UIInput> &
-  VariantProps<typeof inputStyle> & { className?: string };
+  VariantProps<typeof inputStyle> & { className?: string } & { placeholder?: string };
 const Input = React.forwardRef<React.ComponentRef<typeof UIInput>, IInputProps>(
   function Input(
     { className, variant = 'outline', size = 'md', ...props },
@@ -191,7 +191,7 @@ type IInputFieldProps = React.ComponentProps<typeof UIInput.Input> &
 const InputField = React.forwardRef<
   React.ComponentRef<typeof UIInput.Input>,
   IInputFieldProps
->(function InputField({ className, ...props }, ref) {
+>(function InputField({ className, placeholder, ...props }, ref) {
   const { variant: parentVariant, size: parentSize } = useStyleContext(SCOPE);
 
   return (
