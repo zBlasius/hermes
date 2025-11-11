@@ -9,11 +9,11 @@ import {
 } from "@/components/ui/form-control";
 
 interface PropsInput {
-  placeholder: string;
+  placeholder?: string;
   value: string;
   icon?: "mail" | "alert" | "lock";
   handleChange: (text: string) => void;
-  type?: "text" | "password";
+  type?: "text" | "password" ;
   required?: boolean;
   isValid?: boolean;
   errorMessage?: string;
