@@ -13,6 +13,7 @@ import { PrimitiveIcon, UIIcon } from '@gluestack-ui/icon';
 
 const SCOPE = 'INPUT';
 
+
 const UIInput = createInput({
   Root: withStyleContext(View, SCOPE),
   Icon: UIIcon,
@@ -198,6 +199,7 @@ const InputField = React.forwardRef<
     <UIInput.Input
       ref={ref}
       {...props}
+      keyboardType={props.keyboardType || 'default'}
       className={inputFieldStyle({
         parentVariants: {
           variant: parentVariant,

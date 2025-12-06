@@ -2,6 +2,11 @@ export class AppError extends Error {
   public readonly statusCode: number;
   public readonly isOperational: boolean;
 
+  //TODO - integrate with RabbitMQ and Drivestriker
+  // Reads:
+  // 1 https://stackoverflow.com/questions/7310521/node-js-best-practice-exception-handling 
+  // 2 https://www.tritondatacenter.com/node-js/production/design/errors
+
   constructor(message: string, statusCode: number) {
     super(message);
     this.statusCode = statusCode;

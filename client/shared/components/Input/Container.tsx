@@ -1,6 +1,8 @@
 import React from "react";
 import { Input, InputField, InputSlot, InputIcon } from "@/components/ui/input";
 import { AlertCircleIcon, MailIcon, LockIcon } from "@/components/ui/icon";
+import type { VariantProps } from '@gluestack-ui/nativewind-utils';
+import type { StyleProp, ViewStyle } from 'react-native';
 import {
   FormControl,
   FormControlError,
@@ -8,29 +10,31 @@ import {
   FormControlErrorIcon,
 } from "@/components/ui/form-control";
 
+type IInputFieldProps = VariantProps<typeof InputField>;
 interface PropsInput {
   placeholder?: string;
   value: string;
   icon?: "mail" | "alert" | "lock";
   handleChange: (text: string) => void;
-  type?: "text" | "password" ;
+  keyboardType?: "text" | "numeric" ;
   required?: boolean;
   isValid?: boolean;
   errorMessage?: string;
-  style?: object;
+  style?: StyleProp<ViewStyle>;
 }
+
 
 function CompInput({
   placeholder,
   value,
   handleChange,
   icon,
-  type,
+  keyboardType,
   required,
   isValid,
   errorMessage,
   style
-}: PropsInput) {
+}: IInputFieldProps & PropsInput) {
   const renderIcon = () => {
     switch (icon) {
       case 'mail':
@@ -58,14 +62,16 @@ function CompInput({
       }}
     >
       <Input
-        style={{
-          borderRadius: 12,
-          height: 63,
-          gap: 5,
-          backgroundColor: "white",
-          paddingLeft: 10,
-          ...style
-        }}
+        style={[
+          {
+            borderRadius: 12,
+            height: 63,
+            gap: 5,
+            backgroundColor: "white",
+            paddingLeft: 10,
+          },
+          style,
+        ]}
         className="my-1"
         size={"lg"}
       >
@@ -81,7 +87,7 @@ function CompInput({
           placeholder={placeholder}
           value={value}
           onChangeText={(text) => handleChange(text)}
-          type={type}
+          keyboardType={keyboardType}
           style={{ color: "black" }}
         />
       </Input>

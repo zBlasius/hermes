@@ -3,7 +3,7 @@ import { IUserController } from "./contracts/IUserController";
 import { inject, injectable } from "inversify";
 import { IUserService, UserResponse } from "../domain";
 import { TYPES } from "../utils";
-import { BadRequestError, UnauthorizedError, ConflictError } from "../../../shared/errors/AppError";
+import { BadRequestError, UnauthorizedError, ConflictError, InternalServerError } from "../../../shared/errors/AppError";
 import { AppError } from "../../../shared/errors/AppError";
 
 @injectable()
@@ -16,13 +16,14 @@ export class UserController implements IUserController {
         try {
             const { email, password, type = 'manual' } = req.body;
 
+            console.log('req.body', req.body);
             if (!email || !password) {
-                throw new BadRequestError('Email and password are required');
+                throw new BadRequestError('Email and password are required'); //! Fix, it shouldnt crash the server
             }
 
             console.log('entrou aqui 1')
  
-            let result: UserResponse;
+            let result: UserResponse | null;
             switch (type) {
                 case 'manual':
                     result = await this.userService.login({ email, password });
@@ -40,11 +41,12 @@ export class UserController implements IUserController {
  
             res.status(200).json(result);
         } catch (error) {
-            console.log('entrou aqui 2')
+            console.log('entrou aqui 2') // TODO - logs for error messages
             if (error instanceof AppError) {
-                throw new UnauthorizedError(error.message); 
+                // throw new UnauthorizedError(error.message); 
+                console.log('Error login', error.message);
             }
-            throw new UnauthorizedError('An unexpected error occurred');
+            res.status(500).json(new InternalServerError('An unexpected error occurred'));
         }
     }
 
@@ -61,7 +63,7 @@ export class UserController implements IUserController {
                 throw new BadRequestError('Name is required for manual signup');
             }
 
-            let result: UserResponse; 
+            let result: UserResponse | null; 
             switch (type) { 
                 case 'manual':
                     result = await this.userService.signup({ name, email, password });
@@ -80,9 +82,9 @@ export class UserController implements IUserController {
         } catch (error) {
             //TODO - It shouldn't crash the server in case of an error
             if (error instanceof AppError) {
-                throw error; // Let the error handling middleware handle it
+                console.log('Error signup', error.message);
             }
-            throw new BadRequestError('An unexpected error occurred');
+            res.status(500).json(new InternalServerError('An unexpected error occurred'));
         }
     }
 }   

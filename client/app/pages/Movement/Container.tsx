@@ -56,10 +56,9 @@ export default function Container() {
       <ModalContainer title="Statements" onSave={()=> console.log('clicou')} isVisible={isModalVisible} onClose={handleOpenModal}>
         <View style={{ padding: 20, gap: 12 }}>
           <Text style={{ fontSize: 16, fontWeight: "bold", color: 'white'}}>Income Amount</Text>
-          <Input style={{ height: 50, borderRadius:0, color:'black' }} value={incomeAmount} handleChange={setIncomeAmount} />
+          <Input keyboardType="numeric" style={{ height: 50, borderRadius:0, color:'black' }} value={incomeAmount} handleChange={setIncomeAmount} />
           <Text style={{ fontSize: 16, fontWeight: "bold", color: 'white' }}>Description</Text>
           <Input style={{ height: 50, borderRadius:0 }} value={description} handleChange={setDescription} />
-
         </View>
       </ModalContainer>
       <MovementView

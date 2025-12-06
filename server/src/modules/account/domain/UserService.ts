@@ -120,9 +120,9 @@ export class UserService implements IUserService {
 
     async login(data: LoginData): Promise<UserResponse> {
         const user = await this.userRepository.findByEmail(data.email);
-        
+         
         if (!user) { 
-            throw new ConflictError('Invalid email or password');
+            throw new ConflictError('Invalid email or password');// *
         }
 
         const isPasswordValid = await bcrypt.compare(data.password, user.password);
@@ -144,20 +144,21 @@ export class UserService implements IUserService {
         };
     }
 
-    async signup(data: SignUpData): Promise<UserResponse> {
+    async signup(data: SignUpData): Promise<UserResponse | null> {
         try {
             // Check if user already exists
             const existingUser = await this.userRepository.findByEmail(data.email);
+            
             if (existingUser) {
-                throw new ConflictError('Email already exists');
-            }   
- 
+                return null;
+            }
+
             // Hash password
             const hashedPassword = await this.hashPassword(data.password);
 
             // Create user
             const user = await this.userRepository.create({
-                ...data,
+                ...data, 
                 password: hashedPassword,
                 type: 'manual'
             });
@@ -177,12 +178,12 @@ export class UserService implements IUserService {
         } catch (error) {
             if (error instanceof Error) {
                 throw error;
-            } 
-            throw new InternalServerError('Failed to create user');
+            }
+            throw new InternalServerError('Failed to create user'); // TODO - Refactor error handling
         }
     }
 
-    async signUpByGoogle(data: GoogleLoginData): Promise<UserResponse> {
+    async signUpByGoogle(data: GoogleLoginData): Promise<UserResponse | null> {
         try {
             const { email, name } = await this.verifyGoogleToken(data.token);
             

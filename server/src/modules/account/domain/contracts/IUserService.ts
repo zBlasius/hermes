@@ -32,10 +32,10 @@ export interface UserResponse {
 }
 
 export interface IUserService {
-  login(data: LoginData): Promise<UserResponse>;
-  signup(data: SignUpData): Promise<UserResponse>;
-  loginWithGoogle(data: GoogleLoginData): Promise<UserResponse>;
-  signUpByGoogle(data: GoogleLoginData): Promise<UserResponse>;
-  loginWithApple(data: AppleLoginData): Promise<UserResponse>;
-  signUpByApple(data: AppleLoginData): Promise<UserResponse>;
+  login(data: LoginData): Promise<UserResponse | null>;
+  signup(data: SignUpData): Promise<UserResponse | null>;
+  loginWithGoogle(data: GoogleLoginData): Promise<UserResponse | null>;
+  signUpByGoogle(data: GoogleLoginData): Promise<UserResponse | null>;
+  loginWithApple(data: AppleLoginData): Promise<UserResponse | null>;
+  signUpByApple(data: AppleLoginData): Promise<UserResponse | null>;
 }
