@@ -1,26 +1,10 @@
-import { StyleSheet } from 'react-native';
-
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
+import { StyleSheet, View, Text } from 'react-native';
 
 export default function Profile() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Profile screen here</ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <View>
+      <Text>Profile Screen  </Text>
+    </View>
   );
 }
 

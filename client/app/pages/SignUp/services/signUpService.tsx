@@ -17,9 +17,9 @@ export const signUp = async (data: SignUpRequest): Promise<SignUpResponse> => {
   console.log('entrou no signUp')
 
   //console.log("Inserting token:", insertToken);
-  console.log('url:', `${API_URL}/signup`);
+  console.log('url:', `${API_URL}/api/signup`);
   try {
-    const response = await fetch(`${API_URL}/signup`, {
+    const response = await fetch(`${API_URL}/api/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -7,12 +7,11 @@ import { useAuth } from "@/shared/store/AuthProvider";
 export default function Container() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [errorMessage, setErrorMessage] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [validEmail, setValidEmail] = useState(true);
   const [validPassword, setValidPassword] = useState(true);
   const { insertToken } = useAuth();
-
 
   function isValidEmail(value: string) {
     if (!value) return false;
@@ -23,7 +22,7 @@ export default function Container() {
   function isValidPassword(password: string) {
     return password && password.length >= 6;
   }
-  
+
   function checkInfo() {
     let isEmailValid = isValidEmail(email);
     let isPasswordValid = isValidPassword(password);
@@ -48,27 +47,28 @@ export default function Container() {
 
     return {
       validEmail: isEmailValid,
-      validPassword: isPasswordValid
+      validPassword: isPasswordValid,
     };
   }
 
   function handleSignUp() {
     const { validEmail, validPassword } = checkInfo();
-    console.log('teste')
-    // if (!validEmail || !validPassword) {
-    //   return;
-    //   }
-    signUp({email, password, name: "John Doe"}).then(async ret=> {
-      if(ret.token){
-        console.log('entrou aqui no token')
-        insertToken(ret.token);
-      }
+    if (!validEmail || !validPassword) {
+      return;
+    }
+    signUp({ email, password, name: "John Doe" })
+      .then(async (ret) => {
+        if (ret.token) {
+          console.log("entrou aqui no token");
+          insertToken(ret.token);
+        }
 
-      console.log('ret', ret)
-      console.log("Sign up successful:", email, password);
-    }).catch(err=>{
-      console.log('err', err)
-    })
+        console.log("ret", ret);
+        console.log("Sign up successful:", email, password);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
   }
 
   return (
@@ -80,7 +80,7 @@ export default function Container() {
       handleButtonPress={() => handleSignUp()}
       handleChangeEmail={(e) => setEmail(e)}
       handleChangePassword={(e) => setPassword(e)}
-      handleChangeConfirmPassword={(e)=> setConfirmPassword(e)}
+      handleChangeConfirmPassword={(e) => setConfirmPassword(e)}
       validEmail={validEmail}
       validPassword={validPassword}
     />

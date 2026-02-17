@@ -31,7 +31,7 @@ export default class HandleRepository {
             stores.forEach((result, i, store) => {
               let key = store[i][0];
               let value = store[i][1];
-              console.log(`AsyncStorage key: ${key}, value: ${value}`);
+              //console.log(`AsyncStorage key: ${key}, value: ${value}`);
             });
           });
         })
@@ -70,7 +70,7 @@ export default class HandleRepository {
       const _id =
         Math.random().toString(36).substring(2) + Date.now().toString(36);
       data = { ...data, _id };
-      const currentState = await this.getState(this.table);
+      const currentState = await this.getState<T[]>(this.table);
       console.log("currentState", currentState);
       const oldState = currentState ? Array.from(currentState) : [];
       console.log("oldState", oldState);
@@ -83,7 +83,7 @@ export default class HandleRepository {
         data,
       }); // Double check here
       this.checkStorage();
-      return;
+      return data;
     } catch (err) {
       console.log("error insertState", err); // Dispatch event for modal error.
     }
@@ -111,8 +111,12 @@ export default class HandleRepository {
     return Math.random().toString(36).substring(2) + Date.now().toString(36);
   }
 
-  async getState(table?: ILocalTable) { // TODO - melhorar tipagem
+  async getState<T>(table?: ILocalTable): Promise<T | null> { // TODO - melhorar tipagem
     const state = await AsyncStorage.getItem(table || this.state.table);
     return state ? JSON.parse(state) : null;
+  }
+
+  async cleanTable(table: ILocalTable) { //! DANGER
+    await AsyncStorage.removeItem(table);
   }
 }

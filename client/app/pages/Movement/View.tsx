@@ -1,32 +1,31 @@
 import React from "react";
 import { Text, View, ScrollView, StyleSheet } from "react-native";
-import { Button } from "@/shared/components/Button/Container";
 import { CircleButton } from "@/shared/components/CircleButton/Container";
 
 export default function MovementView({
   handleClickAddButton,
   handleClickSubtractButton,
-  handleSyncButton
+  //totalIncome,
+  // totalOutcome,
 }: {
   handleClickAddButton: () => void;
   handleClickSubtractButton: () => void;
-  handleSyncButton: () => void;
+  // totalIncome: number;
+  // totalOutcome: number;
 }) {
+
   return (
     <ScrollView style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerText}>February</Text>
         <Text style={styles.subHeaderText}>Current week (02/02 - 08/02)</Text>
       </View>
 
-      {/* Informations */}
       <View style={styles.informations}>
         <Text style={styles.infoText}>Outcome: -€100</Text>
-        <Text style={styles.infoText}>Income: €400</Text>
+        <Text style={styles.infoText}>Income: €200</Text>
       </View>
 
-      {/* Buttons */}
       <View style={styles.buttons}>
         <CircleButton
           title="+"
@@ -40,12 +39,6 @@ export default function MovementView({
           theme={"red"}
           style={styles.buttonWrapper}
           onPress={handleClickSubtractButton}
-        ></CircleButton>
-        <CircleButton
-          title="SYNC"
-          theme={"primary"}
-          style={styles.buttonWrapper}
-          onPress={handleSyncButton}
         ></CircleButton>
       </View>
     </ScrollView>
@@ -63,9 +56,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   headerText: {
-    fontSize: 22,
+    fontSize: 40,
     fontWeight: "bold",
     color: "#fff",
+    fontFamily: "Work Sans",
   },
   subHeaderText: {
     fontSize: 12,

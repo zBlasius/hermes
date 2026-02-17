@@ -17,10 +17,10 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
-      <GluestackUIProvider mode="dark">
+      <GluestackUIProvider>
         <AuthProvider>
           <ThemeProvider
-            value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+            value={DefaultTheme}
           >
             <Stack>
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />

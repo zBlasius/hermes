@@ -5,7 +5,7 @@ import { OverlayProvider } from '@gluestack-ui/overlay';
 import { ToastProvider } from '@gluestack-ui/toast';
 import { useColorScheme } from 'nativewind';
 
-export type ModeType = 'light' | 'dark' | 'system';
+export type ModeType = 'light' | 'system';
 
 export function GluestackUIProvider({
   mode = 'light',
@@ -18,7 +18,7 @@ export function GluestackUIProvider({
   const { colorScheme, setColorScheme } = useColorScheme();
 
   useEffect(() => {
-    setColorScheme(mode);
+    //setColorScheme(mode);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode]);
 

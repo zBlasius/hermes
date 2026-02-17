@@ -16,13 +16,21 @@ interface INewStatement {
   type: 'income' | 'outcome';
 }
 
-export class StatementLocalRepository extends HandleRepository{
+interface IStatement {
+  _id: string;
+  amount: number;
+  date: string;
+  description: string;
+  type: "income" | "outcome";
+}
+
+export class StatementLocalRepository extends HandleRepository{ // Should have an interface here
   constructor() {
     super({ table: "statements" });
   }
 
-  async getStatements(){
-    const statements =  await this.getState('statements');
+  async getAll(): Promise<IStatement[] | null> {
+    const statements =  await this.getState<IStatement[] | null>('statements');
     console.log('statements', statements)
     return statements;
   }
@@ -33,7 +41,13 @@ export class StatementLocalRepository extends HandleRepository{
   }
 
   async insertStatement(statement: INewStatement){
+    console.log('statement no repo', statement)
     const insertData = await this.insertState<INewStatement>(statement);
     return insertData;
   }
+
+  async cleanAllStatements(){
+    await this.cleanTable('statements');
+  }
+  
 }

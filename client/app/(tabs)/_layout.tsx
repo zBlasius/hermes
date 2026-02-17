@@ -10,14 +10,16 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 import Welcome from "../pages/Welcome/Container";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTabStore } from "@/shared/store/AuthProvider";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const { changeTab } = useTabStore();
 
+  // TODO - Colocar aqui demais telas do usuário, conforme o figma
   function tabs() {
-    // TODO - Colocar aqui demais telas do usuário, conforme o figma
     return (
-      <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
+      <SafeAreaView style={styles.safeArea} edges={["top", "left", "right"]}>
         <Tabs
           screenOptions={{
             tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
@@ -26,11 +28,19 @@ export default function TabLayout() {
             tabBarBackground: TabBarBackground,
             tabBarStyle: Platform.select({
               ios: {
-                // Use a transparent background on iOS to show the blur effect
                 position: "absolute",
               },
               default: {},
             }),
+          }}
+          screenListeners={{
+            tabPress: (e) => {
+              const parts = e?.target?.split("-");
+              if (!parts) return;
+              console.log('parts', parts);
+              const result = parts[0] ?? null;
+              changeTab(result || "default");
+            },
           }}
         >
           <Tabs.Screen

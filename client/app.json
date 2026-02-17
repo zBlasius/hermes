@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "client",
+    "jsEngine": "hermes",
     "slug": "client",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -11,8 +12,11 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.hermes.client",
+      "jsEngine": "jsc",
       "infoPlist": {
-        "UIBackgroundModes": ["processing"],
+        "UIBackgroundModes": [
+          "processing"
+        ],
         "ITSAppUsesNonExemptEncryption": false
       }
     },
@@ -42,8 +46,23 @@
       ],
       "expo-secure-store",
       "expo-background-task",
-      "expo-font",
-      "expo-web-browser"
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/SpaceMono-Regular.ttf",
+            "./assets/fonts/Work Sans.ttf"
+          ],
+          "ios": {
+            "fonts": [
+              "./assets/fonts/SpaceMono-Regular.ttf",
+              "./assets/fonts/Work Sans.ttf"
+            ]
+          }
+        }
+      ],
+      "expo-web-browser",
+      "@react-native-community/datetimepicker"
     ],
     "experiments": {
       "typedRoutes": true

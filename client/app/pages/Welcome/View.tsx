@@ -28,7 +28,7 @@ export default function WelcomeView(props: {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
-          <View // Header
+          <View
             style={{
               width: "100%",
               height: "23%",

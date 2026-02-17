@@ -32,7 +32,6 @@ export default function SignUpView({
       style={{
         width: "95%",
         height: "90%",
-        //backgroundColor: "red",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
