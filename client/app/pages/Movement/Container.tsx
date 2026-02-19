@@ -7,7 +7,7 @@ import ModalContainer from "@/shared/components/Modal/Container";
 import { Input } from "@/shared/components/Input/Container";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { Picker } from "@react-native-picker/picker";
+import { useToast } from "@/shared/store/ToastProvider";
 
 export default function Container() {
   const statementRepo = new StatementLocalRepository();
@@ -18,8 +18,8 @@ export default function Container() {
   );
   const [incomeAmount, setIncomeAmount] = useState("");
   const [description, setDescription] = useState("");
-
   const [date, setDate] = useState(new Date());
+  const { showRegularToast } = useToast();
 
   const TYPE_DESCRIPTION = {
     income: { header: "Income Statement", modalTitle: "Income" },
@@ -80,6 +80,12 @@ export default function Container() {
   //   });
   // }
 
+  function resetStates() {
+    setIncomeAmount("");
+    setDescription("");
+    setDate(new Date());
+  }
+
   function saveStatement() {
     console.log("Saving statement with data:", {
       amount: parseFloat(incomeAmount),
@@ -97,6 +103,8 @@ export default function Container() {
       .then((ret) => {
         handleOpenModal();
         console.log("ret", ret);
+        resetStates();
+        showRegularToast("Statement saved successfully!"); // Show success toast
       })
       .catch((err) => {
         console.log("err", err);

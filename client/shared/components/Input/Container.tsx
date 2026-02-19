@@ -55,23 +55,24 @@ function CompInput({
       isDisabled={false}
       isReadOnly={false}
       isRequired={required}
+      focusable={true}
       style={{
         marginLeft: 5,
         marginRight: 5,
         marginBottom: 35,
+        borderRadius:12
       }}
     >
       <Input
         style={[
-          {
-            borderRadius: 12,
-            height: 63,
+          {        
             gap: 5,
             backgroundColor: "white",
             paddingLeft: 10,
           },
           style,
         ]}
+        focusable
         className="my-1"
         size={"lg"}
       >
@@ -88,7 +89,7 @@ function CompInput({
           value={value}
           onChangeText={(text) => handleChange(text)}
           keyboardType={keyboardType}
-          style={{ color: "black" }}
+          style={{ color: "black", height: "100%", width: "100%", fontFamily:"Work Sans", fontSize:15 }}
         />
       </Input>
 

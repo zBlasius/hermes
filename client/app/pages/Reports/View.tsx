@@ -51,7 +51,15 @@ export default function ReportsView({
 
   return (
     <ScrollView style={styles.container}>
-      <View style={{ display: "flex", flexDirection: "column", gap: 20, paddingBottom: 100, paddingTop: 50 }}>
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 20,
+          paddingBottom: 100,
+          paddingTop: 50,
+        }}
+      >
         <View
           style={{
             backgroundColor: "#1C1C24",
@@ -66,13 +74,15 @@ export default function ReportsView({
             boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
           }}
         >
-          <Text style={{ color: "white", fontSize: 20, fontWeight: "bold" }}> Income data </Text>
+          <Text style={{ color: "white", fontSize: 20, fontWeight: "bold" }}>
+            {" "}
+            Income data{" "}
+          </Text>
           <LineChart
             data={reportsData?.income.length ? reportsData.income : []} // Here I need to format the data to be used in the chart, maybe in the container I can create a function to do this and pass the formated data as prop, instead of passing the raw data and formating it here
             //data2={lineData2} // Here will be the goal line data
             height={300}
             width={290}
-            spacing={80}
             initialSpacing={10}
             xAxisLabelTextStyle={{ color: "white", fontSize: 15 }}
             yAxisTextStyle={{
@@ -82,20 +92,24 @@ export default function ReportsView({
               zIndex: -1,
             }}
             yAxisLabelPrefix="$"
-            yAxisColor={"white"}
-            xAxisColor={"white"}
             color1="skyblue"
             color2="orange"
             textColor1="green"
             dataPointsHeight={15}
             dataPointsWidth={12}
-            dataPointsColor1="blue"
-            dataPointsColor2="red"
-            textShiftY={-2}
-            textShiftX={-5}
+            dataPointsColor1="#cecece"
+            textShiftY={10}
+            textShiftX={-12}
             textFontSize={19}
             textColor="white"
             showScrollIndicator={true}
+            noOfSections={5}    // grid lines on y
+            curved // smooth curves
+            spacing={80} // spacing between points
+            hideDataPoints={false}
+            dataPointsRadius={5}
+            yAxisColor="#ccc"
+            xAxisColor="#ccc"
           />
         </View>
 
@@ -113,13 +127,15 @@ export default function ReportsView({
             boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
           }}
         >
-          <Text style={{ color: "white", fontSize: 20, fontWeight: "bold" }}> Outcome data </Text>
+          <Text style={{ color: "white", fontSize: 20, fontWeight: "bold" }}>
+            {" "}
+            Outcome data{" "}
+          </Text>
           <LineChart
             data={reportsData?.outcome.length ? reportsData.outcome : []}
-            //data2={lineData2} here will be the goal line data
+            //data2={lineData2} // Here will be the goal line data
             height={300}
             width={290}
-            spacing={80}
             initialSpacing={10}
             xAxisLabelTextStyle={{ color: "white", fontSize: 15 }}
             yAxisTextStyle={{
@@ -129,20 +145,24 @@ export default function ReportsView({
               zIndex: -1,
             }}
             yAxisLabelPrefix="$"
-            yAxisColor={"white"}
-            xAxisColor={"white"}
             color1="skyblue"
             color2="orange"
             textColor1="green"
             dataPointsHeight={15}
             dataPointsWidth={12}
-            dataPointsColor1="blue"
-            dataPointsColor2="red"
-            textShiftY={-2}
-            textShiftX={-5}
-            textFontSize={14}
+            dataPointsColor1="#cecece"
+            textShiftY={10}
+            textShiftX={-12}
+            textFontSize={19}
             textColor="white"
             showScrollIndicator={true}
+            noOfSections={5}    // grid lines on y
+            curved // smooth curves
+            spacing={80} // spacing between points
+            hideDataPoints={false}
+            dataPointsRadius={5}
+            yAxisColor="#ccc"
+            xAxisColor="#ccc"
           />
         </View>
       </View>
