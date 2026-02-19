@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { KeyboardAvoidingView, Platform, Text, View } from "react-native";
 import MovementView from "./View";
 import { StatementLocalRepository } from "../../repositories/Statement/StatementLocalRepository";
 import { JobsLocalRepository } from "@/app/repositories/Jobs/JobsLocalRepository";
@@ -8,10 +8,10 @@ import { Input } from "@/shared/components/Input/Container";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useToast } from "@/shared/store/ToastProvider";
+import { useData } from "@/shared/store/DataProvider";
 
 export default function Container() {
   const statementRepo = new StatementLocalRepository();
-  const jobsRepo = new JobsLocalRepository();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [typeStatement, setTypeStatement] = useState<"income" | "outcome">(
     "income",
@@ -20,6 +20,7 @@ export default function Container() {
   const [description, setDescription] = useState("");
   const [date, setDate] = useState(new Date());
   const { showRegularToast } = useToast();
+  const { calculateTotalAmount } = useData();
 
   const TYPE_DESCRIPTION = {
     income: { header: "Income Statement", modalTitle: "Income" },
@@ -105,6 +106,7 @@ export default function Container() {
         console.log("ret", ret);
         resetStates();
         showRegularToast("Statement saved successfully!"); // Show success toast
+        calculateTotalAmount();
       })
       .catch((err) => {
         console.log("err", err);
@@ -119,46 +121,46 @@ export default function Container() {
         isVisible={isModalVisible}
         onClose={handleOpenModal}
       >
-        <View style={{ padding: 20, gap: 12 }}>
-          <Text style={{ fontSize: 16, fontWeight: "bold", color: "white" }}>
-            {TYPE_DESCRIPTION[typeStatement].header}
-          </Text>
-          <Input
-            keyboardType="numeric"
-            style={{ height: 50, borderRadius: 0, color: "black" }}
-            value={incomeAmount}
-            handleChange={setIncomeAmount}
-          />
-          <Text style={{ fontSize: 16, fontWeight: "bold", color: "white" }}>
-            Description
-          </Text>
-          <Input
-            style={{ height: 50, borderRadius: 0 }}
-            value={description}
-            handleChange={setDescription}
-          />
+          <View style={{ padding: 20, gap: 12 }}>
+            <Text style={{ fontSize: 16, fontWeight: "bold", color: "white" }}>
+              {TYPE_DESCRIPTION[typeStatement].header}
+            </Text>
+            <Input
+              keyboardType="numeric"
+              style={{ height: 50, borderRadius: 0, color: "black" }}
+              value={incomeAmount}
+              handleChange={setIncomeAmount}
+            />
+            <Text style={{ fontSize: 16, fontWeight: "bold", color: "white" }}>
+              Description
+            </Text>
+            <Input
+              style={{ height: 50, borderRadius: 0 }}
+              value={description}
+              handleChange={setDescription}
+            />
 
-          <Text style={{ fontSize: 16, fontWeight: "bold", color: "white" }}>
-            Date
-          </Text>
+            <Text style={{ fontSize: 16, fontWeight: "bold", color: "white" }}>
+              Date
+            </Text>
 
-          <DateTimePicker
-            style={{
-              backgroundColor: "white",
-              borderRadius: 10,
-            }}
-            testID="dateTimePicker"
-            value={date}
-            mode={"date"}
-            is24Hour={true}
-            themeVariant="light"
-            display="default"
-            onChange={(event, selectedDate) => {
-              const currentDate = selectedDate || date;
-              setDate(currentDate);
-            }}
-          />
-        </View>
+            <DateTimePicker
+              style={{
+                backgroundColor: "white",
+                borderRadius: 10,
+              }}
+              testID="dateTimePicker"
+              value={date}
+              mode={"date"}
+              is24Hour={true}
+              themeVariant="light"
+              display="default"
+              onChange={(event, selectedDate) => {
+                const currentDate = selectedDate || date;
+                setDate(currentDate);
+              }}
+            />
+          </View>
       </ModalContainer>
       <MovementView
         handleClickAddButton={openIncomeModal}
@@ -167,5 +169,6 @@ export default function Container() {
         //totalOutcome={getTotalOutcome()}
       />
     </>
+    
   );
 }

@@ -14,40 +14,29 @@ import { View, Text } from "react-native";
 
 import "@/global.css";
 import { ToastProvider } from "@/shared/store/ToastProvider";
+import { DataProvider } from "@/shared/store/DataProvider";
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-
-  // const toastConfig = {
-  //   success: (text: string) => (
-  //     <View
-  //       style={{
-  //         backgroundColor: "#4CAF50",
-  //         padding: 16,
-  //         borderRadius: 10,
-  //         alignItems: "center",
-  //         justifyContent: "center",
-  //       }}
-  //     >
-  //       <Text style={{ color: "white", fontWeight: "bold" }}>{text}</Text>
-  //     </View>
-  //   ),
-  //   // Override other toast types as needed
-  // };
 
   return (
     <SafeAreaProvider>
       <GluestackUIProvider>
         <AuthProvider>
           <ToastProvider>
-            <ThemeProvider value={DefaultTheme}>
-              <ToastManager />
-              <Stack>
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                <Stack.Screen name="+not-found" />
-              </Stack>
-              <StatusBar style="auto" />
-            </ThemeProvider>
+            <DataProvider>
+              <ThemeProvider value={DefaultTheme}>
+                <ToastManager />
+                <Stack>
+                  <Stack.Screen
+                    name="(tabs)"
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen name="+not-found" />
+                </Stack>
+                <StatusBar style="auto" />
+              </ThemeProvider>
+            </DataProvider>
           </ToastProvider>
         </AuthProvider>
       </GluestackUIProvider>

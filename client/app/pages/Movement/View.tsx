@@ -1,47 +1,60 @@
 import React from "react";
-import { Text, View, ScrollView, StyleSheet } from "react-native";
+import {
+  Text,
+  View,
+  ScrollView,
+  StyleSheet,
+} from "react-native";
 import { CircleButton } from "@/shared/components/CircleButton/Container";
+import { useData } from "@/shared/store/DataProvider";
 
 export default function MovementView({
   handleClickAddButton,
   handleClickSubtractButton,
-  //totalIncome,
-  // totalOutcome,
 }: {
   handleClickAddButton: () => void;
   handleClickSubtractButton: () => void;
-  // totalIncome: number;
-  // totalOutcome: number;
 }) {
-
+  const { incomeAmount, outcomeAmount } = useData();
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>February</Text>
-        <Text style={styles.subHeaderText}>Current week (02/02 - 08/02)</Text>
-      </View>
+      <ScrollView style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>
+            {new Date().toLocaleString("en-US", { month: "long" })}
+          </Text>
+        </View>
 
-      <View style={styles.informations}>
-        <Text style={styles.infoText}>Outcome: -€100</Text>
-        <Text style={styles.infoText}>Income: €200</Text>
-      </View>
+        <View style={styles.informations}>
+          <Text style={styles.infoText}>
+            Outcome:{" "}
+            <Text style={{ fontWeight: "800", color: "#ff0000" }}>
+              -€{outcomeAmount}
+            </Text>
+          </Text>
+          <Text style={styles.infoText}>
+            Income:{" "}
+            <Text style={{ fontWeight: "800", color: "green" }}>
+              €{incomeAmount}
+            </Text>
+          </Text>
+        </View>
 
-      <View style={styles.buttons}>
-        <CircleButton
-          title="+"
-          theme={"green"}
-          style={styles.buttonWrapper}
-          onPress={handleClickAddButton}
-        ></CircleButton>
+        <View style={styles.buttons}>
+          <CircleButton
+            title="+"
+            theme={"green"}
+            style={styles.buttonWrapper}
+            onPress={handleClickAddButton}
+          ></CircleButton>
 
-        <CircleButton
-          title="-"
-          theme={"red"}
-          style={styles.buttonWrapper}
-          onPress={handleClickSubtractButton}
-        ></CircleButton>
-      </View>
-    </ScrollView>
+          <CircleButton
+            title="-"
+            theme={"red"}
+            style={styles.buttonWrapper}
+            onPress={handleClickSubtractButton}
+          ></CircleButton>
+        </View>
+      </ScrollView>
   );
 }
 
@@ -71,9 +84,10 @@ const styles = StyleSheet.create({
     marginVertical: 30,
   },
   infoText: {
-    fontSize: 16,
+    fontSize: 18,
     color: "#fff",
     marginVertical: 4,
+    fontWeight: "700",
   },
   buttons: {
     flex: 1,

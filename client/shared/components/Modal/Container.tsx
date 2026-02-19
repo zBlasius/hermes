@@ -4,10 +4,13 @@ import {
   Text,
   Pressable,
   StyleSheet,
-  ScrollView,
   TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Keyboard,
 } from "react-native";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useState, useEffect } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Button } from "@/shared/components/Button/Container";
 
@@ -27,42 +30,66 @@ export default function ModalContainer({
   onSave,
   onSaveTitle,
 }: Props) {
-  return (
-    <Modal animationType="slide" transparent visible={isVisible}>
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
 
-      <TouchableWithoutFeedback onPress={()=> {}}>
+  useEffect(() => {
+    const showListener = Platform.OS === "ios"
+      ? Keyboard.addListener("keyboardWillShow", (e) => setKeyboardHeight(e.endCoordinates.height))
+      : Keyboard.addListener("keyboardDidShow", (e) => setKeyboardHeight(e.endCoordinates.height));
+
+    const hideListener = Platform.OS === "ios"
+      ? Keyboard.addListener("keyboardWillHide", () => setKeyboardHeight(0))
+      : Keyboard.addListener("keyboardDidHide", () => setKeyboardHeight(0));
+
+    return () => {
+      showListener.remove();
+      hideListener.remove();
+    };
+  }, []);
+
+  return (
+    <Modal transparent animationType="slide" visible={isVisible}>
+      {/* Overlay */}
+      <TouchableWithoutFeedback onPress={onClose}>
         <View style={styles.overlay} />
       </TouchableWithoutFeedback>
 
-      <View style={styles.modalContainer}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>{title}</Text>
-          <Pressable onPress={onClose}>
-            <MaterialIcons name="close" color="#fff" size={22} />
-          </Pressable>
-        </View>
+      {/* Keyboard aware modal */}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={[styles.modalWrapper, { marginBottom: keyboardHeight}]} // ajusta conforme o teclado real
+      >
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <View style={styles.modalContainer}>
+            {/* Header */}
+            <View style={styles.titleContainer}>
+              <Text style={styles.title}>{title}</Text>
+              <Pressable onPress={onClose}>
+                <MaterialIcons name="close" color="#fff" size={22} />
+              </Pressable>
+            </View>
 
-        <ScrollView
-          contentContainerStyle={styles.contentContainer}
-          showsVerticalScrollIndicator={false}
-        >
-          {children}
+            {/* Content */}
+            <View style={styles.contentContainer}>{children}</View>
+
+            {/* Buttons */}
+            <View style={styles.buttonContainer}>
+              <Button
+                onPress={onClose}
+                title="Cancel"
+                theme="soft"
+                style={{ width: 150, height: 55 }}
+              />
+              <Button
+                onPress={onSave}
+                title={onSaveTitle || "Save"}
+                theme="primary"
+                style={{ width: 150, height: 55 }}
+              />
+            </View>
+          </View>
         </ScrollView>
-        <View style={styles.buttonContainer}>
-          <Button
-            onPress={onClose}
-            title="Cancel"
-            theme="soft"
-            style={{ width: 150, height: 55 }}
-          />
-          <Button
-            onPress={onSave}
-            title={onSaveTitle || "Save"}
-            theme="primary"
-            style={{ width: 150, height: 55 }}
-          />
-        </View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 }
@@ -72,25 +99,27 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.5)",
   },
-  modalContainer: {
-    backgroundColor: "#25292e",
-    borderRadius: 18,
-    maxHeight: "55%",
-    paddingBottom:0,
+  modalWrapper: {
     position: "absolute",
-    top: "35%",
+    bottom: 0,
     left: 0,
     right: 0,
   },
+  modalContainer: {
+    backgroundColor: "#25292e",
+    borderRadius: 18,
+    paddingBottom: 8,
+    marginBottom: 20,
+  },
   titleContainer: {
     backgroundColor: "#464C55",
-    borderTopRightRadius: 18,
     borderTopLeftRadius: 18,
+    borderTopRightRadius: 18,
     paddingHorizontal: 20,
     paddingVertical: 12,
     flexDirection: "row",
-    alignItems: "center",
     justifyContent: "space-between",
+    alignItems: "center",
   },
   title: {
     color: "#fff",
@@ -98,16 +127,12 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     padding: 20,
+    gap: 12,
   },
   buttonContainer: {
-    display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
     paddingHorizontal: 15,
-    paddingTop: 10,
-    paddingBottom: 10,
-    width: "100%",
-    boxShadow: "0px -2px 20px #161718ff",
+    paddingVertical: 12,
   },
 });

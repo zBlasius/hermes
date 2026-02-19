@@ -1,5 +1,5 @@
 import { Tabs } from "expo-router";
-import React from "react";
+import React, { useEffect } from "react";
 import { Platform, StyleSheet } from "react-native";
 
 import { HapticTab } from "@/components/HapticTab";
@@ -11,10 +11,16 @@ import Welcome from "../pages/Welcome/Container";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTabStore } from "@/shared/store/AuthProvider";
+import { useData } from "@/shared/store/DataProvider";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const { changeTab } = useTabStore();
+  const { calculateTotalAmount } = useData();
+  
+  useEffect(() => {
+    calculateTotalAmount();
+  }, []);
 
   // TODO - Colocar aqui demais telas do usuário, conforme o figma
   function tabs() {
