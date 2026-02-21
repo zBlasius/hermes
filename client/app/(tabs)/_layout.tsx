@@ -12,6 +12,8 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTabStore } from "@/shared/store/AuthProvider";
 import { useData } from "@/shared/store/DataProvider";
+import { SyncService } from "@/shared/services/SyncService";
+import { AuthenticationService } from "@/shared/services/Authentication";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -20,6 +22,8 @@ export default function TabLayout() {
   
   useEffect(() => {
     calculateTotalAmount();
+    //SyncService.startListening();
+    AuthenticationService.verifyToken();
   }, []);
 
   // TODO - Colocar aqui demais telas do usuário, conforme o figma
