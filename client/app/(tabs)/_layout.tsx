@@ -67,7 +67,7 @@ export default function TabLayout() {
               ),
             }}
           />
-          <Tabs.Screen
+          {/* <Tabs.Screen // I'll make it later on in the project, for now it's just a placeholder
             name="budget"
             options={{
               title: "Budget",
@@ -75,13 +75,13 @@ export default function TabLayout() {
                 <IconSymbol size={28} name="wallet.pass" color={color} />
               ),
             }}
-          />
+          /> */}
           <Tabs.Screen
             name="profile"
             options={{
               title: "Profile",
               tabBarIcon: ({ color }: any) => (
-                <IconSymbol size={28} name="chevron.up.square" color={color} />
+                <IconSymbol size={28} name="person.fill" color={color} />
               ),
             }}
           />

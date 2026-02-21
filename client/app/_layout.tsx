@@ -1,5 +1,4 @@
 import {
-  DarkTheme,
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
@@ -9,9 +8,7 @@ import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import { AuthProvider } from "@/shared/store/AuthProvider";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import ToastManager, { Toast } from "toastify-react-native";
-import { View, Text } from "react-native";
-
+import ToastManager from "toastify-react-native";
 import "@/global.css";
 import { ToastProvider } from "@/shared/store/ToastProvider";
 import { DataProvider } from "@/shared/store/DataProvider";

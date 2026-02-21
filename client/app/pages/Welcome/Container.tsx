@@ -13,7 +13,7 @@ export default function Container({ children }: PropsWithChildren<{}>) {
 
   return (
     <>
-      {!token ? (
+      {!token ? ( // It must to have an server autentication.
         <WelcomeView
           currentTab={currentTab}
           handleChangeTab={(tab) => setCurrentTab(tab as Tab)}

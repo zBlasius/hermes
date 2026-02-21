@@ -1,22 +1,22 @@
-import { StyleSheet, View, Text } from 'react-native';
+// import { StyleSheet, View, Text } from 'react-native';
 
-export default function Budget() {
-  return (
-    <View>
-     <Text>Budget Screen</Text>    
-    </View>
-  );
-}
+// export default function Budget() {
+//   return (
+//     <View>
+//      <Text>Budget Screen</Text>    
+//     </View>
+//   );
+// }
 
-const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-});
+// const styles = StyleSheet.create({
+//   headerImage: {
+//     color: '#808080',
+//     bottom: -90,
+//     left: -35,
+//     position: 'absolute',
+//   },
+//   titleContainer: {
+//     flexDirection: 'row',
+//     gap: 8,
+//   },
+// });

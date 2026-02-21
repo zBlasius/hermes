@@ -60,6 +60,7 @@ export default function ReportsView({
           paddingTop: 50,
         }}
       >
+        <Text style={{ color: "white", fontSize: 24, fontWeight: "bold" }}> Reports </Text>
         <View
           style={{
             backgroundColor: "#1C1C24",
