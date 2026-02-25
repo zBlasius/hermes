@@ -68,6 +68,7 @@ export default function WelcomeView(props: {
             style={{
               width: "100%",
               height: "67%",
+              
             }}
             contentContainerStyle={{ flexGrow: 1 }}
             keyboardShouldPersistTaps="handled"

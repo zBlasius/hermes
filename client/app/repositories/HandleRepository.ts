@@ -77,7 +77,7 @@ export default class HandleRepository {
       const newData = [...oldState, data];
       console.log("newData", newData);
       await AsyncStorage.setItem(this.table, JSON.stringify(newData));
-      await this.insertQueueNetworkUpdate({
+      await this.insertQueueNetworkUpdate({ // TODO - Make userID relation with the job, to avoid conflicts between users.
         table: this.table,
         relatedId: _id,
         data,

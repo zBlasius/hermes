@@ -18,7 +18,11 @@ export class AuthenticationService {
       });
       console.log("result", response);
       const result = await response.json();
-      console.log("Verification result:", result);
+      console.log("result", result);
+      if(result.message == "Invalid or expired token") { // TODO - Change this to a more robust error handling, with specific error codes from the server
+        await SecureStore.deleteItemAsync("jwt");
+        return false;
+      }
       return result;
     } catch (error) {
       console.error("Error verifying token:", error);

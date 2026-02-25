@@ -1,8 +1,8 @@
 import React from "react";
 import { Input, InputField, InputSlot, InputIcon } from "@/components/ui/input";
 import { AlertCircleIcon, MailIcon, LockIcon } from "@/components/ui/icon";
-import type { VariantProps } from '@gluestack-ui/nativewind-utils';
-import type { StyleProp, ViewStyle } from 'react-native';
+import type { VariantProps } from "@gluestack-ui/nativewind-utils";
+import { TextInput, type StyleProp, type ViewStyle } from "react-native";
 import {
   FormControl,
   FormControlError,
@@ -16,13 +16,13 @@ interface PropsInput {
   value: string;
   icon?: "mail" | "alert" | "lock";
   handleChange: (text: string) => void;
-  keyboardType?: "text" | "numeric" ;
+  keyboardType?: IInputFieldProps["keyboardType"];
+  type?: "text" | "password";
   required?: boolean;
   isValid?: boolean;
   errorMessage?: string;
   style?: StyleProp<ViewStyle>;
 }
-
 
 function CompInput({
   placeholder,
@@ -31,17 +31,18 @@ function CompInput({
   icon,
   keyboardType,
   required,
-  isValid,
+  isValid = true,
   errorMessage,
-  style
+  type,
+  style,
 }: IInputFieldProps & PropsInput) {
   const renderIcon = () => {
     switch (icon) {
-      case 'mail':
+      case "mail":
         return <MailIcon />;
-      case 'alert':
+      case "alert":
         return <AlertCircleIcon />;
-      case 'lock':
+      case "lock":
         return <LockIcon />;
       default:
         return null;
@@ -56,50 +57,38 @@ function CompInput({
       isReadOnly={false}
       isRequired={required}
       focusable={true}
-      style={{
-        marginLeft: 5,
-        marginRight: 5,
-        marginBottom: 35,
-        borderRadius:12
-      }}
     >
       <Input
-        style={[
-          {        
-            gap: 5,
-            backgroundColor: "white",
-            paddingLeft: 10,
-          },
-          style,
-        ]}
-        focusable
-        className="my-1"
-        size={"lg"}
+        size="lg"
+        style={{
+          height: 50,
+          backgroundColor: "white",
+          borderRadius: 10,
+          paddingHorizontal: 10,
+          marginVertical: 5,
+        }}
       >
         {icon && (
-          <InputSlot style={{ backgroundColor: "white", height: "100%" }}>
-            <InputIcon style={{ color: "black" }}>
-              {renderIcon()}
-            </InputIcon>
+          <InputSlot>
+            <InputIcon style={{ color: "black" }}>{renderIcon()}</InputIcon>
           </InputSlot>
         )}
 
         <InputField
           placeholder={placeholder}
           value={value}
-          onChangeText={(text) => handleChange(text)}
+          onChangeText={handleChange}
           keyboardType={keyboardType}
-          style={{ color: "black", height: "100%", width: "100%", fontFamily:"Work Sans", fontSize:15 }}
+          type={type}
+          style={{ color: "black", zIndex: 1, bottom: 32 }}
         />
       </Input>
 
-      <FormControlError style={{position: "absolute", bottom: -30}}>
-        <FormControlErrorIcon key={errorMessage}>
-          <AlertCircleIcon />
-        </FormControlErrorIcon>
-        <FormControlErrorText>{errorMessage}</FormControlErrorText>
-      </FormControlError>
-
+      {!isValid && errorMessage && (
+        <FormControlError>
+          <FormControlErrorText style={{ color: "red", fontSize: 13 }}>*{errorMessage}</FormControlErrorText>
+        </FormControlError>
+      )}
     </FormControl>
   );
 }

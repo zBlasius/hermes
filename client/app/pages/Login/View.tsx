@@ -107,6 +107,7 @@ export default function LoginView({
           required={true}
           isValid={!emailError}
           errorMessage={emailError}
+          keyboardType="email-address"
         />
 
         <Input
@@ -115,6 +116,7 @@ export default function LoginView({
           handleChange={handleChangePassword}
           icon="lock"
           type="password"
+          keyboardType="visible-password"
           required={true}
           isValid={!passwordError}
           errorMessage={passwordError}

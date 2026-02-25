@@ -35,7 +35,7 @@ export default function SignUpView({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        zIndex: 2,
+        zIndex: 0,
         margin: "auto",
       }}
     >
