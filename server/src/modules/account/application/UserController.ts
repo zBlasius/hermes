@@ -3,88 +3,120 @@ import { IUserController } from "./contracts/IUserController";
 import { inject, injectable } from "inversify";
 import { IUserService, UserResponse } from "../domain";
 import { TYPES } from "../utils";
-import { BadRequestError, UnauthorizedError, ConflictError, InternalServerError } from "../../../shared/errors/AppError";
+import {
+  BadRequestError,
+  UnauthorizedError,
+  ConflictError,
+  InternalServerError,
+} from "../../../shared/errors/AppError";
 import { AppError } from "../../../shared/errors/AppError";
 
 @injectable()
 export class UserController implements IUserController {
-    constructor(
-        @inject(TYPES.UserService) private userService: IUserService
-    ) {}
+  constructor(@inject(TYPES.UserService) private userService: IUserService) {}
 
-    async login(req: Request, res: Response): Promise<void> {
-        try {
-            const { email, password, type = 'manual' } = req.body;
+  async login(req: Request, res: Response): Promise<void> {
+    try {
+      const { email, password, type = "manual" } = req.body;
 
-            console.log('req.body', req.body);
-            if (!email || !password) {
-                throw new BadRequestError('Email and password are required'); //! Fix, it shouldnt crash the server
-            }
+      console.log("req.body", req.body);
+      if (!email || !password) {
+        throw new BadRequestError("Email and password are required"); //! Fix, it shouldnt crash the server
+      }
 
-            console.log('entrou aqui 1')
- 
-            let result: UserResponse | null;
-            switch (type) {
-                case 'manual':
-                    result = await this.userService.login({ email, password });
-                    break;
-                case 'google':
-                    result = await this.userService.loginWithGoogle({ token: password });
-                    break;
-                case 'apple':
-                    result = await this.userService.loginWithApple({ token: password });
-                    break;
-                default:
-                    console.log('entrou aqui 4')
-                    throw new BadRequestError('Invalid authentication type');
-            }
- 
-            res.status(200).json(result);
-        } catch (error) {
-            console.log('entrou aqui 2') // TODO - logs for error messages
-            if (error instanceof AppError) {
-                // throw new UnauthorizedError(error.message); 
-                console.log('Error login', error.message);
-            }
-            res.status(500).json(new InternalServerError('An unexpected error occurred'));
-        }
+      console.log("entrou aqui 1");
+
+      let result: UserResponse | null;
+      switch (type) {
+        case "manual":
+          result = await this.userService.login({ email, password });
+          break;
+        case "google":
+          result = await this.userService.loginWithGoogle({ token: password });
+          break;
+        case "apple":
+          result = await this.userService.loginWithApple({ token: password });
+          break;
+        default:
+          console.log("entrou aqui 4");
+          throw new BadRequestError("Invalid authentication type");
+      }
+
+      res.status(200).json(result);
+    } catch (error) {
+      console.log("entrou aqui 2"); // TODO - logs for error messages
+      if (error instanceof AppError) {
+        // throw new UnauthorizedError(error.message);
+        console.log("Error login", error.message);
+      }
+      res
+        .status(500)
+        .json(new InternalServerError("An unexpected error occurred"));
     }
+  }
 
-    async signup(req: Request, res: Response): Promise<void> {
-        try {
-            const { name, email, password, type = 'manual' } = req.body;
-   
-            console.log('req.body', req.body);  
-            if (!email || !password) { 
-                throw new BadRequestError('Email and password are required'); 
-            }
+  async signup(req: Request, res: Response): Promise<void> {
+    try {
+      const { name, email, password, type = "manual" } = req.body;
 
-            if (type === 'manual' && !name) {
-                throw new BadRequestError('Name is required for manual signup');
-            }
+      console.log("req.body", req.body);
+      if (!email || !password) {
+        throw new BadRequestError("Email and password are required");
+      }
 
-            let result: UserResponse | null; 
-            switch (type) { 
-                case 'manual':
-                    result = await this.userService.signup({ name, email, password });
-                    break;
-                case 'google':
-                    result = await this.userService.signUpByGoogle({ token: password });
-                    break;
-                case 'apple':
-                    result = await this.userService.signUpByApple({ token: password });
-                    break;
-                default:
-                    throw new BadRequestError('Invalid authentication type');
-            }
+      if (type === "manual" && !name) {
+        throw new BadRequestError("Name is required for manual signup");
+      }
 
-            res.status(201).json(result);
-        } catch (error) {
-            //TODO - It shouldn't crash the server in case of an error
-            if (error instanceof AppError) {
-                console.log('Error signup', error.message);
-            }
-            res.status(500).json(new InternalServerError('An unexpected error occurred'));
-        }
+      let result: UserResponse | null;
+      switch (type) {
+        case "manual":
+          result = await this.userService.signup({ name, email, password });
+          break;
+        case "google":
+          result = await this.userService.signUpByGoogle({ token: password });
+          break;
+        case "apple":
+          result = await this.userService.signUpByApple({ token: password });
+          break;
+        default:
+          throw new BadRequestError("Invalid authentication type");
+      }
+
+      res.status(201).json(result);
+    } catch (error) {
+      //TODO - It shouldn't crash the server in case of an error
+      if (error instanceof AppError) {
+        console.log("Error signup", error.message);
+      }
+      res
+        .status(500)
+        .json(new InternalServerError("An unexpected error occurred"));
     }
-}   
+  }
+
+  async verifyCurrentToken(req: Request, res: Response): Promise<void> {
+    try {
+      const token = req.headers.authorization?.split(" ")[1];
+      
+      if (!token) {
+        res.status(404).json({ message: "Token required" });
+        return;
+      }
+
+      const verifiedToken = await this.userService.verifyCurrentToken(token);
+      if(!verifiedToken) {
+        res.status(401).json({ message: "Invalid or expired token"})
+        return;
+      }
+      res.status(200).json({ verifiedToken });
+    } catch (error) {
+      if (error instanceof AppError) {
+        console.log("Error verifyCurrentToken", error.message);
+      }
+      res
+        .status(500)
+        .json(new InternalServerError("An unexpected error occurred"));
+    }
+  }
+}

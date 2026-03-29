@@ -96,31 +96,41 @@ export default function LoginView({
           display: "flex",
           justifyContent: "center",
           gap: 0,
-          paddingVertical: 10,
         }}
       >
-        <Input
-          placeholder="Email address"
-          value={email}
-          handleChange={handleChangeEmail}
-          icon="mail"
-          required={true}
-          isValid={!emailError}
-          errorMessage={emailError}
-          keyboardType="email-address"
-        />
+        <View
+          style={{
+            width: "100%",
+            display: "flex",
+            gap: 16,
+            height: "30%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Input
+            placeholder="Email address"
+            value={email}
+            handleChange={handleChangeEmail}
+            icon="mail"
+            required={true}
+            isValid={!emailError}
+            errorMessage={emailError}
+            keyboardType="email-address"
+          />
 
-        <Input
-          placeholder="Password"
-          value={password}
-          handleChange={handleChangePassword}
-          icon="lock"
-          type="password"
-          keyboardType="visible-password"
-          required={true}
-          isValid={!passwordError}
-          errorMessage={passwordError}
-        />
+          <Input
+            placeholder="Password"
+            value={password}
+            handleChange={handleChangePassword}
+            icon="lock"
+            type="password"
+            keyboardType="visible-password"
+            required={true}
+            isValid={!passwordError}
+            errorMessage={passwordError}
+          />
+        </View>
       </View>
 
       <View

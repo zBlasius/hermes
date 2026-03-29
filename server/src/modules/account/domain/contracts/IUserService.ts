@@ -38,4 +38,5 @@ export interface IUserService {
   signUpByGoogle(data: GoogleLoginData): Promise<UserResponse | null>;
   loginWithApple(data: AppleLoginData): Promise<UserResponse | null>;
   signUpByApple(data: AppleLoginData): Promise<UserResponse | null>;
+  verifyCurrentToken(token: string): Promise<string | null>;
 }

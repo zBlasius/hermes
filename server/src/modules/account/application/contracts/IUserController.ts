@@ -4,4 +4,5 @@ import { UserResponse } from "../../domain";
 export interface IUserController {
     login(req: Request, res: Response): Promise<void>;
     signup(req: Request, res: Response): Promise<void>;
+    verifyCurrentToken(req: Request, res: Response): Promise<void>;
 }

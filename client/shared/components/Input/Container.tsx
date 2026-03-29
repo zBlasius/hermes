@@ -57,15 +57,16 @@ function CompInput({
       isReadOnly={false}
       isRequired={required}
       focusable={true}
+     // style={{width: "100%"}}
     >
       <Input
-        size="lg"
+        size="md"
         style={{
-          height: 50,
           backgroundColor: "white",
           borderRadius: 10,
           paddingHorizontal: 10,
           marginVertical: 5,
+          height:55
         }}
       >
         {icon && (
@@ -79,14 +80,20 @@ function CompInput({
           value={value}
           onChangeText={handleChange}
           keyboardType={keyboardType}
-          type={type}
-          style={{ color: "black", zIndex: 1, bottom: 32 }}
+          secureTextEntry={type === "password"}
+          style={{
+            color: "black",
+            paddingVertical: 0,
+            top: 10,
+          }}
         />
       </Input>
 
       {!isValid && errorMessage && (
         <FormControlError>
-          <FormControlErrorText style={{ color: "red", fontSize: 13 }}>*{errorMessage}</FormControlErrorText>
+          <FormControlErrorText style={{ color: "red", fontSize: 13 }}>
+            *{errorMessage}
+          </FormControlErrorText>
         </FormControlError>
       )}
     </FormControl>

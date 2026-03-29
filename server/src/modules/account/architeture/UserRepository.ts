@@ -9,7 +9,7 @@ import { IDatabase } from "../../../database/postgres/connection"; // Adjust the
 export class UserRepository implements IUserRepository {
   constructor(@inject(TYPES.PostgresConnection) private connection: IDatabase) {}
 
-  async create(data: SignUpData): Promise<User> {
+  async create(data: SignUpData) {
     try {
       const sql = `
         INSERT INTO users (name, email, password, type, created_at)
@@ -20,12 +20,12 @@ export class UserRepository implements IUserRepository {
       const client = this.connection.getClient(); 
       const result = await client.query(sql, params);
       return result.rows[0];
-    } catch (error) {
+    } catch (error) { 
       throw new InternalServerError('Database query failed');
     }
   }
 
-  async findByEmail(email: string): Promise<User | null> {
+  async findByEmail(email: string) {
     try {
       const sql = `
         SELECT id, name, email, password, type, created_at
