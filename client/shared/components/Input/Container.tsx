@@ -57,7 +57,7 @@ function CompInput({
       isReadOnly={false}
       isRequired={required}
       focusable={true}
-     // style={{width: "100%"}}
+      style={{ width: "100%" }}
     >
       <Input
         size="md"
@@ -66,7 +66,10 @@ function CompInput({
           borderRadius: 10,
           paddingHorizontal: 10,
           marginVertical: 5,
-          height:55
+          height: 55,
+          flexDirection: "row",
+          alignItems: "center",
+          overflow: "hidden",
         }}
       >
         {icon && (
@@ -83,8 +86,9 @@ function CompInput({
           secureTextEntry={type === "password"}
           style={{
             color: "black",
-            paddingVertical: 0,
-            top: 10,
+            width: "100%",
+            backgroundColor: "red",
+            height: "100%",
           }}
         />
       </Input>

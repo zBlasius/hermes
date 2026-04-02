@@ -36,7 +36,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ //TODO -
     setToken(false);
   };
 
-  const checkValidToken = async () => {
+  const checkValidToken = async () => { // TODO - Implement it through the code
     const storedToken = await SecureStore.getItemAsync("jwt");
     setToken(!!storedToken);
   }

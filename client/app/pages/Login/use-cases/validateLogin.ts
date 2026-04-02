@@ -25,7 +25,7 @@ const validateLogin = (email: string, password: string): LoginValidationResult =
   if (!password) {
     result.isValid = false;
     result.passwordError = 'Password is required';
-  } else if (password.length <= 6) {
+  } else if (password.length < 6) {
     result.isValid = false;
     result.passwordError = 'Password must be at least 6 characters';
   }
