@@ -71,8 +71,7 @@ export default class HandleRepository {
 
   async insertState<T extends Record<string, unknown>>(data: T) {
     try {
-      const _id =
-        Math.random().toString(36).substring(2) + Date.now().toString(36);
+      const _id = crypto.randomUUID();
       data = { ...data, _id };
       const currentState = await this.getState<T[]>(this.table);
       console.log("currentState", currentState);
@@ -120,7 +119,7 @@ export default class HandleRepository {
   }
 
   createUniqueIdByTimestamp() {
-    return Math.random().toString(36).substring(2) + Date.now().toString(36);
+    return crypto.randomUUID();
   }
 
   async getState<T>(table?: ILocalTable): Promise<T | null> {

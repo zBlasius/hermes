@@ -21,17 +21,33 @@ This mobile project is designed to help users take control of their financial li
 
 ## Getting Started
 
-1. **Install the App**:
-   - Clone the repository and follow the setup guide for React Native development (Expo or bare workflow).
-   - Make sure to set up the backend server locally or connect to a deployed API.
+1. Clone the repository.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the app:
+   ```bash
+   npm start
+   ```
 
-2. **Create Your Account**:
-   - Register as a new user directly in the mobile app.
-   - Your data will be stored locally and synced to the server when online.
+## Running the Server Locally
 
-3. **Start Managing Your Finances**:
-   - Add new income or expense records.
-   - View monthly summaries and insights into your spending behavior.
+1. **Install dependencies**:
+   ```bash
+   cd server
+   npm start
+   ```
+
+2. **Start the database** (requires Docker Desktop running):
+   ```bash
+   docker-compose up -d
+   ```
+
+3. **Expose the server via ngrok**:
+   ```bash
+   ngrok http --host-header=localhost 8080
+   ```
 
 ## How It Works
 

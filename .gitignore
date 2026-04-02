@@ -38,5 +38,6 @@ yarn-error.*
 *.tsbuildinfo
 
 commands.txt
+CLAUDE.md
 
 ./build
